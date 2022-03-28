@@ -1,8 +1,8 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 public class EnemyStats extends CharacterStats{
-    public EnemyStats(int hp, int defense, int attackModifier, int defenseModifier) {
-        super(hp, defense, attackModifier, defenseModifier);
+    public EnemyStats(String name, int hp, int defense, int attackModifier, int defenseModifier) {
+        super(name, hp, defense, attackModifier, defenseModifier);
     }
 
     @Override

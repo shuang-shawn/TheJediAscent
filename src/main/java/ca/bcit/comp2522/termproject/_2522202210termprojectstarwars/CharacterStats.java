@@ -3,13 +3,15 @@ package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 import com.almasb.fxgl.entity.component.Component;
 
 public abstract class CharacterStats extends Component {
+    private final String name;
     private int hp;
     private int defense;
     private int attackModifier;
     private int defenseModifier;
 
 
-    public CharacterStats(int hp, int defense, int attackModifier, int defenseModifier) {
+    public CharacterStats(String name, int hp, int defense, int attackModifier, int defenseModifier) {
+        this.name = name;
         this.hp = hp;
         this.defense = defense;
         this.attackModifier = attackModifier;
@@ -24,12 +26,17 @@ public abstract class CharacterStats extends Component {
             this.hp -= damage - defense;
         }
     }
+
     public void setDefense(int value) {
         this.defense += value;
     }
 
     public void setAttackModifier(int attackModifier) {
         this.attackModifier += attackModifier;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getDefense() {
@@ -51,9 +58,11 @@ public abstract class CharacterStats extends Component {
     public String displayDefense() {
         return "Defense: " + this.defense;
     }
+
     public String displayAttackModifier() {
         return "Attack modifier: " + this.attackModifier;
     }
+
     @Override
     public String toString() {
         return "Character{" + "hp=" + hp + '}';

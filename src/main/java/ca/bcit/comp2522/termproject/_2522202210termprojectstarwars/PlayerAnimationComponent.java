@@ -6,13 +6,13 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
-public class PlayerAnimationComponent extends AnimationComponent{
+public class PlayerAnimationComponent extends AnimationComponent {
     private static final String IDLE_ASSET = "AnakinIdle1.png";
     private static final String RUN_ASSET = "AnakinRun1.png";
     private final AnimationChannel animWalk;
     private final AnimationChannel animIdle;
 
-    public PlayerAnimationComponent(){
+    public PlayerAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
                 5, 94, 132, Duration.seconds(1), 0, 4);
         animWalk = new AnimationChannel(FXGL.image(RUN_ASSET),

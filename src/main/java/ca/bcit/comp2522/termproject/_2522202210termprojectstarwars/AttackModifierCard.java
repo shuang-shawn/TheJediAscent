@@ -13,10 +13,12 @@ public class AttackModifierCard extends Card {
     public void increaseAttack(Entity character) {
         if (character.getType() == CharacterType.PLAYER) {
             character.getComponent(PlayerStats.class).setAttackModifier(this.getValue());
-            getNotificationService().pushNotification(character.getComponent(PlayerStats.class).displayAttackModifier());
+            getNotificationService()
+                    .pushNotification(character.getComponent(PlayerStats.class).displayAttackModifier());
         } else {
             character.getComponent(EnemyStats.class).setAttackModifier(this.getValue());
-            getNotificationService().pushNotification(character.getComponent(EnemyStats.class).displayAttackModifier());
+            getNotificationService()
+                    .pushNotification(character.getComponent(EnemyStats.class).displayAttackModifier());
         }
     }
 }

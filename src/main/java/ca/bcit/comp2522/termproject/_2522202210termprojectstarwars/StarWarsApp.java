@@ -46,6 +46,7 @@ public class StarWarsApp extends GameApplication{
         this.playerDefense = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getDefense());
         this.playerAttackModifier = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getAttackModifier());
     }
+
     @Override
     protected void initUI() {
         Text playerHP = FXGL.getUIFactoryService().newText("", Color.BLACK, 24);

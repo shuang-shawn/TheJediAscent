@@ -20,13 +20,14 @@ public class GameElementFactory implements EntityFactory {
                 .with(new IrremovableComponent())
                 .build();
     }
+
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.PLAYER)
                 .at(-100, 170)
                 .with(new PlayerAnimationComponent())
-                .with(new PlayerStats(20, 0, 0, 0))
+                .with(new PlayerStats("Anakin", 20, 0, 0, 0))
                 .build();
     }
 
@@ -36,7 +37,7 @@ public class GameElementFactory implements EntityFactory {
                 .type(CharacterType.ENEMY)
                 .at(500, 170)
                 .with(new EnemyAnimationComponent())
-                .with(new EnemyStats(20, 0, 0, 0))
+                .with(new EnemyStats("Dooku", 20, 0, 0, 0))
                 .build();
     }
 }

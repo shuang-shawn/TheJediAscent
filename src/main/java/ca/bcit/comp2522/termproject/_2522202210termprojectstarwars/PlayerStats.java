@@ -7,12 +7,8 @@ public class PlayerStats extends CharacterStats {
     private int defenseModifier;
 
 
-    public PlayerStats(int hp, int defense, int attackModifier, int defenseModifier) {
-        super(hp, defense, attackModifier, defenseModifier);
-    }
-
-    public String test(){
-        return "testing";
+    public PlayerStats(String name, int hp, int defense, int attackModifier, int defenseModifier) {
+        super(name, hp, defense, attackModifier, defenseModifier);
     }
 
     @Override
