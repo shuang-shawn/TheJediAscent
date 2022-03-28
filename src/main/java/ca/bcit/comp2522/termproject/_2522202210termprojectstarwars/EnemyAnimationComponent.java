@@ -7,12 +7,12 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
 public class EnemyAnimationComponent extends AnimationComponent {
-    private static final String IDLE_ASSET = "DookuIdle.gif";
+    private static final String IDLE_ASSET = "DookuIdle1.png";
     private final AnimationChannel animIdle;
 
     public EnemyAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
-                7, 38, 65, Duration.seconds(1), 0, 6);
+                7, 96, 132, Duration.seconds(1), 0, 6);
         texture = new AnimatedTexture(animIdle);
         texture.loopAnimationChannel(animIdle);
     }
