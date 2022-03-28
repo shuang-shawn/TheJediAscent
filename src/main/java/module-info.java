@@ -9,6 +9,7 @@ module ca.bcit.comp2522.termproject._2522202210termprojectstarwars {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires com.almasb.fxgl.all;
 
     opens ca.bcit.comp2522.termproject._2522202210termprojectstarwars to javafx.fxml;
     exports ca.bcit.comp2522.termproject._2522202210termprojectstarwars;

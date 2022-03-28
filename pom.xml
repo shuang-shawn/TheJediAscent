@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.almasb</groupId>
+            <artifactId>fxgl</artifactId>
+            <version>17.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17.0.1</version>
@@ -113,7 +118,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ca.bcit.comp2522.termproject._2522202210termprojectstarwars/ca.bcit.comp2522.termproject._2522202210termprojectstarwars.HelloApplication
+                                ca.bcit.comp2522.termproject._2522202210termprojectstarwars/ca.bcit.comp2522.termproject._2522202210termprojectstarwars.StarWarsApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
