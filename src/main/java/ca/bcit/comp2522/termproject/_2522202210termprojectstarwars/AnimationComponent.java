@@ -6,8 +6,9 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 
 public class AnimationComponent extends Component {
 
-    protected int speed = 100;
+    protected double speed = 150;
     protected AnimatedTexture texture;
+    protected int frameCounter = 0;
 
     public AnimationComponent() {
     }

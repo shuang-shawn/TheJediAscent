@@ -1,4 +1,5 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
@@ -12,7 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-public class StarWarsApp extends GameApplication{
+public class StarWarsApp extends GameApplication {
     private Entity player;
     private Entity enemy;
     private Card attackCard;
@@ -86,12 +87,15 @@ public class StarWarsApp extends GameApplication{
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
             attackCard.attack(player, enemy);
+            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
         });
         onKeyDown(KeyCode.G, () -> {
             defenseCard.defense(player);
+            player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
         });
         onKeyDown(KeyCode.H, () -> {
             attackModifierCard.increaseAttack(player);
+            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
         });
     }
 

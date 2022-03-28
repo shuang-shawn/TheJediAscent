@@ -31,9 +31,27 @@ public class PlayerAnimationComponent extends AnimationComponent {
                 speed = 0;
             }
         } else {
-            if (texture.getAnimationChannel() == animWalk) {
+            if (frameCounter > 0) {
+                frameCounter--;
+            }
+            if (texture.getAnimationChannel() != animIdle && frameCounter == 0) {
                 texture.loopAnimationChannel(animIdle);
             }
         }
+    }
+
+    public void attackAnimation() {
+        frameCounter = 100;
+        texture.loopAnimationChannel(animWalk);
+    }
+
+    public void defenseAnimation() {
+        frameCounter = 100;
+        texture.loopAnimationChannel(animWalk);
+    }
+
+    public void buffAnimation() {
+        frameCounter = 100;
+        texture.loopAnimationChannel(animWalk);
     }
 }
