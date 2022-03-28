@@ -1,0 +1,24 @@
+package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
+
+import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.texture.AnimatedTexture;
+import com.almasb.fxgl.texture.AnimationChannel;
+import javafx.util.Duration;
+
+public class EnemyAnimationComponent extends AnimationComponent {
+    private static final String IDLE_ASSET = "DookuIdle.gif";
+    private final AnimationChannel animIdle;
+
+    public EnemyAnimationComponent() {
+        animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
+                7, 38, 65, Duration.seconds(1), 0, 6);
+        texture = new AnimatedTexture(animIdle);
+        texture.loopAnimationChannel(animIdle);
+    }
+
+    @Override
+    public void onUpdate(double tpf) {
+
+    }
+}
