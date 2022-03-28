@@ -12,11 +12,11 @@ public abstract class Card extends Entity {
     public int getValue() {
         return value;
     }
-    public void attack(Character attacker, Character receiver) { }
+    public void attack(Entity attacker, Entity receiver) { }
 
-    public void defense(Character character) { }
+    public void defense(Entity character) { }
 
-    public void increaseAttack(Character character) { }
+    public void increaseAttack(Entity character) { }
 
-    public void increaseDefense(Character character) { }
+    public void increaseDefense(Entity character) { }
 }

@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
-public class Enemy extends Character{
-    public Enemy(int hp, int defense, int attackModifier, int defenseModifier) {
+public class EnemyStats extends CharacterStats{
+    public EnemyStats(int hp, int defense, int attackModifier, int defenseModifier) {
         super(hp, defense, attackModifier, defenseModifier);
     }
 

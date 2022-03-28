@@ -1,15 +1,15 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
-import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.component.Component;
 
-public abstract class Character extends Entity {
+public abstract class CharacterStats extends Component {
     private int hp;
     private int defense;
     private int attackModifier;
     private int defenseModifier;
 
 
-    public Character(int hp, int defense, int attackModifier, int defenseModifier) {
+    public CharacterStats(int hp, int defense, int attackModifier, int defenseModifier) {
         this.hp = hp;
         this.defense = defense;
         this.attackModifier = attackModifier;

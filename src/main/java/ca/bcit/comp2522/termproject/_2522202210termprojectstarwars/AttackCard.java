@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
+import com.almasb.fxgl.entity.Entity;
+
 import static com.almasb.fxgl.dsl.FXGL.getNotificationService;
 
 public class AttackCard extends Card {
@@ -8,9 +10,16 @@ public class AttackCard extends Card {
     }
 
     @Override
-    public void attack(Character attacker, Character receiver) {
-        int attackValue = this.getValue() + attacker.getAttackModifier() - receiver.getDefenseModifier();
-        receiver.setHP(attackValue);
-        getNotificationService().pushNotification(receiver.toString());
+    public void attack(Entity attacker, Entity receiver) {
+        if (attacker.getType() == CharacterType.PLAYER){
+            int attackValue = this.getValue() + attacker.getComponent(PlayerStats.class).getAttackModifier() - receiver.getComponent(EnemyStats.class).getDefenseModifier();
+            receiver.getComponent(EnemyStats.class).setHP(attackValue);
+            getNotificationService().pushNotification(receiver.getComponent(EnemyStats.class).toString());
+        }
+        else {
+            int attackValue = this.getValue() + attacker.getComponent(EnemyStats.class).getAttackModifier() - receiver.getComponent(PlayerStats.class).getDefenseModifier();
+            receiver.getComponent(PlayerStats.class).setHP(attackValue);
+            getNotificationService().pushNotification(receiver.getComponent(PlayerStats.class).toString());
+        }
     }
 }

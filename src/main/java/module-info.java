@@ -1,4 +1,4 @@
-module ca.bcit.comp2522.termproject._2522202210termprojectstarwars {
+open module ca.bcit.comp2522.termproject._2522202210termprojectstarwars {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,6 +11,5 @@ module ca.bcit.comp2522.termproject._2522202210termprojectstarwars {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens ca.bcit.comp2522.termproject._2522202210termprojectstarwars to javafx.fxml;
     exports ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 }
