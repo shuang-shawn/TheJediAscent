@@ -24,13 +24,16 @@ public class StarWarsApp extends GameApplication{
     private IntegerProperty playerAttackModifier;
 
     @Override
-    protected void initSettings(GameSettings gameSettings) {
+    protected void initSettings(GameSettings settings) {
+        settings.setWidth(800);
+        settings.setHeight(400);
     }
 
     @Override
     protected void initGame() {
-        FXGL.getGameWorld().addEntityFactory(new CharacterFactory());
+        FXGL.getGameWorld().addEntityFactory(new GameElementFactory());
 
+        spawn("background");
         player = FXGL.spawn("player");
         enemy = FXGL.spawn("enemy");
 
