@@ -7,7 +7,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
 public class EnemyAnimationComponent extends AnimationComponent {
-    private static final String IDLE_ASSET = "DookuIdle1.png";
+    private static final String IDLE_ASSET = "DookuIdle.png";
     private final AnimationChannel animIdle;
 
     public EnemyAnimationComponent() {
