@@ -7,17 +7,22 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
 public class PlayerAnimationComponent extends AnimationComponent {
-    private static final String IDLE_ASSET = "AnakinIdle1.png";
-    private static final String RUN_ASSET = "AnakinRun1.png";
-    private final AnimationChannel animWalk;
+    private static final String IDLE_ASSET = "AnakinIdle.png";
+    private static final String RUN_ASSET = "AnakinRun.png";
+    private static final String ATTACK_ASSET = "AnakinAttack.png";
+    private final AnimationChannel animRun;
     private final AnimationChannel animIdle;
+    private final AnimationChannel animAttack;
 
     public PlayerAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
                 5, 94, 132, Duration.seconds(1), 0, 4);
-        animWalk = new AnimationChannel(FXGL.image(RUN_ASSET),
+        animRun = new AnimationChannel(FXGL.image(RUN_ASSET),
                 13, 124, 130, Duration.seconds(1.5), 0, 12);
+        animAttack = new AnimationChannel(FXGL.image(RUN_ASSET),
+                15, 172, 136, Duration.seconds(1.5), 0, 14);
         texture = new AnimatedTexture(animIdle);
+        texture.playAnimationChannel(animIdle);
     }
 
     @Override
@@ -25,7 +30,7 @@ public class PlayerAnimationComponent extends AnimationComponent {
         if (entity.getX() < 200) {
             entity.translateX(speed * tpf);
             if (texture.getAnimationChannel() == animIdle) {
-                texture.loopAnimationChannel(animWalk);
+                texture.loopAnimationChannel(animRun);
             }
             if (FXGLMath.abs(speed) < 1) {
                 speed = 0;
@@ -42,16 +47,16 @@ public class PlayerAnimationComponent extends AnimationComponent {
 
     public void attackAnimation() {
         frameCounter = 100;
-        texture.loopAnimationChannel(animWalk);
+        texture.loopAnimationChannel(animAttack);
     }
 
     public void defenseAnimation() {
         frameCounter = 100;
-        texture.loopAnimationChannel(animWalk);
+        texture.loopAnimationChannel(animRun);
     }
 
     public void buffAnimation() {
         frameCounter = 100;
-        texture.loopAnimationChannel(animWalk);
+        texture.loopAnimationChannel(animRun);
     }
 }
