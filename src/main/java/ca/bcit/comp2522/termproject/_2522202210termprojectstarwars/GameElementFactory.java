@@ -15,7 +15,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("background")
     public Entity newBackground(SpawnData data) {
         return FXGL.entityBuilder()
-                .view("background/AnakinAndObiwanVsDooku.png")
+                .view("background/Flagship.png")
                 .zIndex(-1)
                 .with(new IrremovableComponent())
                 .build();
