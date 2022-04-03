@@ -4,8 +4,14 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -27,7 +33,7 @@ public class StarWarsApp extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(800);
-        settings.setHeight(400);
+        settings.setHeight(600);
     }
 
     @Override
@@ -35,6 +41,7 @@ public class StarWarsApp extends GameApplication {
         FXGL.getGameWorld().addEntityFactory(new GameElementFactory());
 
         spawn("background");
+        spawn("cardPanel");
         player = FXGL.spawn("player");
         enemy = FXGL.spawn("enemy");
 
@@ -50,28 +57,34 @@ public class StarWarsApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        Text playerHP = FXGL.getUIFactoryService().newText("", Color.BLACK, 24);
-        playerHP.setTranslateX(20);
-        playerHP.setTranslateY(20);
-        playerHP.textProperty().bind(this.playerHP.asString("Current Player HP: [%d]"));
+        int rowOneY = 345;
+        int rowHeight = 20;
+        int playerTextX = 190;
+        int enemyTextX = 500;
+        int textSize = 17;
+
+        Text playerHP = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        playerHP.setTranslateX(playerTextX);
+        playerHP.setTranslateY(rowOneY);
+        playerHP.textProperty().bind(this.playerHP.asString("Player HP: [%d]"));
         getGameScene().addUINode(playerHP);
 
-        Text enemyHP = FXGL.getUIFactoryService().newText("", Color.BLACK, 24);
-        enemyHP.setTranslateX(450);
-        enemyHP.setTranslateY(20);
-        enemyHP.textProperty().bind(this.enemyHP.asString("Current EnemyStats HP: [%d]"));
+        Text enemyHP = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        enemyHP.setTranslateX(enemyTextX);
+        enemyHP.setTranslateY(rowOneY);
+        enemyHP.textProperty().bind(this.enemyHP.asString("Enemy HP: [%d]"));
         getGameScene().addUINode(enemyHP);
 
-        Text playerDefense = FXGL.getUIFactoryService().newText("", Color.BLACK, 24);
-        playerDefense.setTranslateX(20);
-        playerDefense.setTranslateY(40);
-        playerDefense.textProperty().bind(this.playerDefense.asString("Current Player defense: [%d]"));
+        Text playerDefense = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        playerDefense.setTranslateX(playerTextX);
+        playerDefense.setTranslateY(rowOneY+rowHeight);
+        playerDefense.textProperty().bind(this.playerDefense.asString("Player defense: [%d]"));
         getGameScene().addUINode(playerDefense);
 
-        Text playerAttackModifier = FXGL.getUIFactoryService().newText("", Color.BLACK, 24);
-        playerAttackModifier.setTranslateX(20);
-        playerAttackModifier.setTranslateY(60);
-        playerAttackModifier.textProperty().bind(this.playerAttackModifier.asString("Current Player attack modifier: [%d]"));
+        Text playerAttackModifier = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        playerAttackModifier.setTranslateX(playerTextX);
+        playerAttackModifier.setTranslateY(rowOneY+rowHeight*2);
+        playerAttackModifier.textProperty().bind(this.playerAttackModifier.asString("Player attack modifier: [%d]"));
         getGameScene().addUINode(playerAttackModifier);
     }
 
@@ -88,6 +101,7 @@ public class StarWarsApp extends GameApplication {
         onKeyDown(KeyCode.F, () -> {
             attackCard.attack(player, enemy);
             player.getComponent(PlayerAnimationComponent.class).attackAnimation();
+            System.out.println(player.getType());
         });
         onKeyDown(KeyCode.G, () -> {
             defenseCard.defense(player);

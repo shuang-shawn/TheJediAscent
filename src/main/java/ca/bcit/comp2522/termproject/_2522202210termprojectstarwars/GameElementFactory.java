@@ -10,12 +10,25 @@ import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.texture.Texture;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class GameElementFactory implements EntityFactory {
     @Spawns("background")
     public Entity newBackground(SpawnData data) {
         return FXGL.entityBuilder()
                 .view("background/Flagship.png")
+                .at(0, 0)
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("cardPanel")
+    public Entity newCardPanel(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new Rectangle(800, 300, Color.BLACK))
+                .at(0, 330)
                 .zIndex(-1)
                 .with(new IrremovableComponent())
                 .build();
