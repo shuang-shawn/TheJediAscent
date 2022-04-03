@@ -34,6 +34,46 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("fCard")
+    public Entity fCard(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new Rectangle(140, 180, Color.WHITE))
+                .at(30, 410)
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("gCard")
+    public Entity gCard(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new Rectangle(140, 180, Color.WHITE))
+                .at(230, 410)
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("hCard")
+    public Entity hCard(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new Rectangle(140, 180, Color.WHITE))
+                .at(430, 410)
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("jCard")
+    public Entity jCard(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new Rectangle(140, 180, Color.WHITE))
+                .at(630, 410)
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
         return FXGL.entityBuilder()

@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.core.View;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import javafx.scene.control.Button;
@@ -42,6 +43,10 @@ public class StarWarsApp extends GameApplication {
 
         spawn("background");
         spawn("cardPanel");
+        spawn("fCard");
+        spawn("gCard");
+        spawn("hCard");
+        spawn("jCard");
         player = FXGL.spawn("player");
         enemy = FXGL.spawn("enemy");
 
@@ -57,7 +62,7 @@ public class StarWarsApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        int rowOneY = 345;
+        int rowOneY = 350;
         int rowHeight = 20;
         int playerTextX = 190;
         int enemyTextX = 500;
@@ -110,6 +115,9 @@ public class StarWarsApp extends GameApplication {
         onKeyDown(KeyCode.H, () -> {
             attackModifierCard.increaseAttack(player);
             player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+        });
+        onKeyDown(KeyCode.J, () -> {
+            player.removeFromWorld();
         });
     }
 
