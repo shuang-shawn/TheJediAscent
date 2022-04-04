@@ -21,22 +21,25 @@ public class EnemyAction {
     }
 
     public void attack(Entity player){
+        System.out.println("Enemy attacked player.");
         attackCard.attack(enemy,player);
     }
 
     public void defense(){
+        System.out.println("Enemy increase defense.");
         defenseCard.defense(enemy);
     }
 
     public void attackModifier(){
+        System.out.println("Enemy increase attack.");
         attackModifierCard.increaseAttack(enemy);
     }
 
     public void execute(Entity player){
-        actionParam = random.nextInt(0,3);
-        if (actionParam == 0) {
+        actionParam = random.nextInt(1,11);
+        if (actionParam <= 6) {
             attack(player);
-        } else if (actionParam == 1) {
+        } else if (actionParam <= 8) {
             defense();
         } else {
             attackModifier();
