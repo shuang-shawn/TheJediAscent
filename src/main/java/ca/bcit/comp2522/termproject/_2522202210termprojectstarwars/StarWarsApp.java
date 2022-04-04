@@ -2,27 +2,33 @@ package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.core.View;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import javafx.scene.control.Button;
+import com.almasb.fxgl.event.EventBus;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.scene.Scene;
+import com.almasb.fxgl.time.TimerAction;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.util.Duration;
 
+
+import java.sql.SQLException;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class StarWarsApp extends GameApplication {
     private Entity player;
     private Entity enemy;
+    private Entity fCard;
+    private Entity gCard;
+    private Entity hCard;
+    private Entity jCard;
     private Card attackCard;
     private Card defenseCard;
     private Card attackModifierCard;
@@ -32,9 +38,21 @@ public class StarWarsApp extends GameApplication {
     private IntegerProperty playerAttackModifier;
 
     @Override
+    protected void onPreInit() {
+        try {
+            DatabaseOperation.readData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(800);
         settings.setHeight(600);
+        settings.setTitle("Star Wars");
+        settings.setSceneFactory(new MySceneFactory());
+        settings.setGameMenuEnabled(true);
     }
 
     @Override
@@ -43,12 +61,14 @@ public class StarWarsApp extends GameApplication {
 
         spawn("background");
         spawn("cardPanel");
-        spawn("fCard");
-        spawn("gCard");
-        spawn("hCard");
-        spawn("jCard");
-        player = FXGL.spawn("player");
-        enemy = FXGL.spawn("enemy");
+
+        fCard = spawn("fCard");
+        gCard = spawn("gCard");
+        hCard = spawn("hCard");
+        jCard = spawn("jCard");
+
+        player = spawn("player");
+        enemy = spawn("enemy");
 
         this.attackCard = new AttackCard(10);
         this.defenseCard = new DefenseCard(5);
@@ -106,7 +126,6 @@ public class StarWarsApp extends GameApplication {
         onKeyDown(KeyCode.F, () -> {
             attackCard.attack(player, enemy);
             player.getComponent(PlayerAnimationComponent.class).attackAnimation();
-            System.out.println(player.getType());
         });
         onKeyDown(KeyCode.G, () -> {
             defenseCard.defense(player);
@@ -117,7 +136,8 @@ public class StarWarsApp extends GameApplication {
             player.getComponent(PlayerAnimationComponent.class).buffAnimation();
         });
         onKeyDown(KeyCode.J, () -> {
-            player.removeFromWorld();
+            attackCard.attack(player, enemy);
+            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
         });
     }
 

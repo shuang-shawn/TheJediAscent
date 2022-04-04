@@ -39,8 +39,6 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .view(new Rectangle(140, 180, Color.WHITE))
                 .at(30, 410)
-                .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 
@@ -49,8 +47,6 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .view(new Rectangle(140, 180, Color.WHITE))
                 .at(230, 410)
-                .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 
@@ -59,8 +55,6 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .view(new Rectangle(140, 180, Color.WHITE))
                 .at(430, 410)
-                .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 
@@ -69,8 +63,6 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .view(new Rectangle(140, 180, Color.WHITE))
                 .at(630, 410)
-                .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 
@@ -86,6 +78,16 @@ public class GameElementFactory implements EntityFactory {
 
     @Spawns("enemy")
     public Entity newEnemy(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .with(new EnemyStats("Dooku", 20, 0, 0, 0))
+                .build();
+    }
+
+    @Spawns("test")
+    public Entity test(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.ENEMY)
                 .at(500, 170)

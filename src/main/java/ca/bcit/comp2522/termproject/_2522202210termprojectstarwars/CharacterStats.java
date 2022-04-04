@@ -19,12 +19,7 @@ public abstract class CharacterStats extends Component {
     }
 
     public void setHP(int damage) {
-        if (damage <= defense) {
-            this.defense -= damage;
-        } else {
-            this.defense = 0;
-            this.hp -= damage - defense;
-        }
+        this.hp -= damage - defense;
     }
 
     public void setDefense(int value) {
