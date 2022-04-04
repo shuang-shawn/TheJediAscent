@@ -32,6 +32,7 @@ public class StarWarsApp extends GameApplication {
     private Card attackCard;
     private Card defenseCard;
     private Card attackModifierCard;
+    private Card defenseModifierCard;
     private IntegerProperty playerHP;
     private IntegerProperty enemyHP;
     private IntegerProperty playerDefense;
@@ -66,13 +67,13 @@ public class StarWarsApp extends GameApplication {
         gCard = spawn("gCard");
         hCard = spawn("hCard");
         jCard = spawn("jCard");
-
         player = spawn("player");
         enemy = spawn("enemy");
 
         this.attackCard = new AttackCard(10);
         this.defenseCard = new DefenseCard(5);
         this.attackModifierCard = new AttackModifierCard(1);
+        this.defenseModifierCard = new DefenseModifierCard(1);
 
         this.playerHP = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getHp());
         this.enemyHP = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getHp());
@@ -119,25 +120,61 @@ public class StarWarsApp extends GameApplication {
         enemyHP.set(enemy.getComponent(EnemyStats.class).getHp());
         playerDefense.set(player.getComponent(PlayerStats.class).getDefense());
         playerAttackModifier.set(player.getComponent(PlayerStats.class).getAttackModifier());
+        if (player.getComponent(Deck.class).getDeck().isEmpty()) {
+            player.getComponent(Deck.class).refreshDeck();
+            fCard = spawn("fCard");
+            gCard = spawn("gCard");
+            hCard = spawn("hCard");
+            jCard = spawn("jCard");
+        }
     }
 
     @Override
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
-            attackCard.attack(player, enemy);
-            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
+            if (player.getComponent(Deck.class).checkCard(CardType.ATTACK)) {
+                attackCard.attack(player, enemy);
+                player.getComponent(PlayerAnimationComponent.class).attackAnimation();
+                despawnWithScale(fCard);
+                player.getComponent(Deck.class).usedCard(CardType.ATTACK);
+            } else {
+                getNotificationService()
+                        .pushNotification("No remaining attack card.");
+            }
+
         });
         onKeyDown(KeyCode.G, () -> {
-            defenseCard.defense(player);
-            player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
+            if (player.getComponent(Deck.class).checkCard(CardType.DEFENSE)) {
+                defenseCard.defense(player);
+                player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
+                despawnWithScale(gCard);
+                player.getComponent(Deck.class).usedCard(CardType.DEFENSE);
+            } else {
+                getNotificationService()
+                        .pushNotification("No remaining defense card.");
+            }
         });
         onKeyDown(KeyCode.H, () -> {
-            attackModifierCard.increaseAttack(player);
-            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+            if (player.getComponent(Deck.class).checkCard(CardType.ATTACKMODIFIER)) {
+                attackModifierCard.increaseAttack(player);
+                player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+                despawnWithScale(hCard);
+                player.getComponent(Deck.class).usedCard(CardType.ATTACKMODIFIER);
+            } else {
+                getNotificationService()
+                        .pushNotification("No remaining attack modifier card.");
+            }
         });
         onKeyDown(KeyCode.J, () -> {
-            attackCard.attack(player, enemy);
-            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
+            if (player.getComponent(Deck.class).checkCard(CardType.DEFENSEMODIFER)) {
+                defenseModifierCard.increaseDefense(player);
+                player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+                despawnWithScale(jCard);
+                player.getComponent(Deck.class).usedCard(CardType.DEFENSEMODIFER);
+            } else {
+                getNotificationService()
+                        .pushNotification("No remaining defense modifier card.");
+            }
         });
     }
 
