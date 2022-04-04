@@ -5,9 +5,8 @@ import com.almasb.fxgl.entity.Entity;
 import java.util.Random;
 
 public class EnemyAction {
-    private int actionParam;
     private final Random random;
-    private Entity enemy;
+    private final Entity enemy;
     private final AttackCard attackCard;
     private final DefenseCard defenseCard;
     private final AttackModifierCard attackModifierCard;
@@ -36,7 +35,7 @@ public class EnemyAction {
     }
 
     public void execute(Entity player){
-        actionParam = random.nextInt(1,11);
+        int actionParam = random.nextInt(1,11);
         if (actionParam <= 6) {
             attack(player);
         } else if (actionParam <= 8) {
