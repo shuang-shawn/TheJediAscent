@@ -83,7 +83,6 @@ public class GameElementFactory implements EntityFactory {
                 .type(CharacterType.ENEMY)
                 .at(500, 170)
                 .with(new EnemyAnimationComponent())
-                .with(new EnemyStats("Dooku", 20, 0, 0, 0))
                 .build();
     }
 
