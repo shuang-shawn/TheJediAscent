@@ -41,6 +41,7 @@ public class StarWarsApp extends GameApplication {
     private IntegerProperty enemyAttackModifier;
     private EnemyStats enemyStats;
     private EnemyAction enemyAction;
+    private Map map;
 
     @Override
     protected void onPreInit() {
@@ -73,7 +74,14 @@ public class StarWarsApp extends GameApplication {
         jCard = spawn("jCard");
 
         player = spawn("player");
-        enemy = spawn("enemy");
+
+
+
+        map = new Map();
+        if (!map.getMap().isEmpty()) {
+            enemy = spawn("enemy");
+            enemy.addComponent(map.getFirstRoom().getEnemy());
+        }
 
         this.attackCard = new AttackCard(10);
         this.defenseCard = new DefenseCard(5);
@@ -150,17 +158,42 @@ public class StarWarsApp extends GameApplication {
             hCard = spawn("hCard");
             jCard = spawn("jCard");
         }
+
+
     }
+
+//    protected void checkDead() {
+//        if (enemy.getComponent(EnemyStats.class).getHp() <= 0) {
+//            despawnWithScale(enemy);
+//            player.getComponent(Deck.class).addCard(map.getFirstRoom().getRewardCard());
+//            if (map.getMap().iterator().hasNext()) {
+//                map.clearFirstRoom();
+//                enemy = spawn("enemy");
+//                enemy.addComponent(map.getFirstRoom().getEnemy());
+//                enemyAction = new EnemyAction(enemy);
+//            } else {
+//                map.clearFirstRoom();
+//            }
+//        }
+//        if (map.getMap().isEmpty()) {
+//            getNotificationService()
+//                    .pushNotification("You have pass the trial.");
+//        }
+//    }
 
     @Override
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
             if (player.getComponent(Deck.class).checkCard(CardType.ATTACK)) {
-                attackCard.attack(player, enemy);
+                player.getComponent(Deck.class).getCard(CardType.ATTACK).attack(player, enemy);
                 player.getComponent(PlayerAnimationComponent.class).attackAnimation();
-                despawnWithScale(fCard);
                 player.getComponent(Deck.class).usedCard(CardType.ATTACK);
+                despawnWithScale(fCard);
+//                if (player.getComponent(Deck.class).checkCard(CardType.ATTACK)) {
+//                    despawnWithScale(fCard);
+//                }
                 enemyAction.execute(player);
+//                checkDead();
             } else {
                 getNotificationService()
                         .pushNotification("No remaining attack card.");
@@ -169,11 +202,15 @@ public class StarWarsApp extends GameApplication {
         });
         onKeyDown(KeyCode.G, () -> {
             if (player.getComponent(Deck.class).checkCard(CardType.DEFENSE)) {
-                defenseCard.defense(player);
+                player.getComponent(Deck.class).getCard(CardType.DEFENSE).defense(player);
                 player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
                 despawnWithScale(gCard);
                 player.getComponent(Deck.class).usedCard(CardType.DEFENSE);
+//                if (player.getComponent(Deck.class).checkCard(CardType.DEFENSE)) {
+//                    despawnWithScale(gCard);
+//                }
                 enemyAction.execute(player);
+//                checkDead();
             } else {
                 getNotificationService()
                         .pushNotification("No remaining defense card.");
@@ -181,11 +218,15 @@ public class StarWarsApp extends GameApplication {
         });
         onKeyDown(KeyCode.H, () -> {
             if (player.getComponent(Deck.class).checkCard(CardType.ATTACKMODIFIER)) {
-                attackModifierCard.increaseAttack(player);
+                player.getComponent(Deck.class).getCard(CardType.ATTACKMODIFIER).increaseAttack(player);
                 player.getComponent(PlayerAnimationComponent.class).buffAnimation();
                 despawnWithScale(hCard);
                 player.getComponent(Deck.class).usedCard(CardType.ATTACKMODIFIER);
+//                if (player.getComponent(Deck.class).checkCard(CardType.ATTACKMODIFIER)) {
+//                    despawnWithScale(hCard);
+//                }
                 enemyAction.execute(player);
+//                checkDead();
             } else {
                 getNotificationService()
                         .pushNotification("No remaining attack modifier card.");
@@ -193,11 +234,15 @@ public class StarWarsApp extends GameApplication {
         });
         onKeyDown(KeyCode.J, () -> {
             if (player.getComponent(Deck.class).checkCard(CardType.DEFENSEMODIFER)) {
-                defenseModifierCard.increaseDefense(player);
+                player.getComponent(Deck.class).getCard(CardType.DEFENSEMODIFER).increaseDefense(player);
                 player.getComponent(PlayerAnimationComponent.class).buffAnimation();
                 despawnWithScale(jCard);
                 player.getComponent(Deck.class).usedCard(CardType.DEFENSEMODIFER);
+//                if (player.getComponent(Deck.class).checkCard(CardType.DEFENSEMODIFER)) {
+//                    despawnWithScale(jCard);
+//                }
                 enemyAction.execute(player);
+//                checkDead();
             } else {
                 getNotificationService()
                         .pushNotification("No remaining defense modifier card.");
