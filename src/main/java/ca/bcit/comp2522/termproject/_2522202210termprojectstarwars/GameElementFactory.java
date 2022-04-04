@@ -45,7 +45,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("gCard")
     public Entity gCard(SpawnData data) {
         return FXGL.entityBuilder()
-                .view(new Rectangle(140, 180, Color.WHITE))
+                .view(new Rectangle(140, 180, Color.BLUE))
                 .at(230, 410)
                 .build();
     }
@@ -53,7 +53,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("hCard")
     public Entity hCard(SpawnData data) {
         return FXGL.entityBuilder()
-                .view(new Rectangle(140, 180, Color.WHITE))
+                .view(new Rectangle(140, 180, Color.GREEN))
                 .at(430, 410)
                 .build();
     }
@@ -61,7 +61,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("jCard")
     public Entity jCard(SpawnData data) {
         return FXGL.entityBuilder()
-                .view(new Rectangle(140, 180, Color.WHITE))
+                .view(new Rectangle(140, 180, Color.ORANGE))
                 .at(630, 410)
                 .build();
     }
@@ -73,6 +73,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(-100, 170)
                 .with(new PlayerAnimationComponent())
                 .with(new PlayerStats("Anakin", 20, 0, 0, 0))
+                .with(new Deck())
                 .build();
     }
 
