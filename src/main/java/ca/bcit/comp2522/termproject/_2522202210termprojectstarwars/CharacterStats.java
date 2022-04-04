@@ -30,6 +30,10 @@ public abstract class CharacterStats extends Component {
         this.attackModifier += attackModifier;
     }
 
+    public void setDefenseModifier(int defenseModifier) {
+        this.defenseModifier += defenseModifier;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,6 +60,9 @@ public abstract class CharacterStats extends Component {
 
     public String displayAttackModifier() {
         return "Attack modifier: " + this.attackModifier;
+    }
+    public String displayDefenseModifier() {
+        return "Defense modifier: " + this.defenseModifier;
     }
 
     @Override
