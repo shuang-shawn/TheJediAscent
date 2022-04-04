@@ -4,8 +4,10 @@ import java.sql.*;
 import java.util.Properties;
 
 public final class DatabaseOperation {
+    private static Connection connection;
 
-    private DatabaseOperation() { }
+    private DatabaseOperation() {
+    }
 
     public static void readData() throws SQLException, ClassNotFoundException {
         // We register the Driver
@@ -20,7 +22,7 @@ public final class DatabaseOperation {
         connectionProperties.put("password", "12345678");
 
         // We establish a connection...
-        final Connection connection = DriverManager.getConnection(URL, connectionProperties);
+        connection = DriverManager.getConnection(URL, connectionProperties);
         if (connection != null) {
             System.out.println("Successfully connected to MySQL database.");
         }
@@ -28,20 +30,35 @@ public final class DatabaseOperation {
         // Create a statement to send on the connection...
         Statement stmt = connection.createStatement();
 
-//        // Execute the statement and receive the result...
-//        stmt.executeUpdate("INSERT INTO users VALUES (\"JIMMY\",\"QWERTY\")");
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-//
-//        // And then display the result!
-        System.out.println("user_id\t\tpassword");
-        while (rs.next()) {
-            String userID = rs.getString("user_id");
-            String password = rs.getString("password");
-            System.out.println(userID + "\t\t" + password);
+        // Execute the statement...
+        try {
+            String sql = "CREATE TABLE StarWarGameState" +
+                    "(name VARCHAR(20) not NULL, " +
+                    "hp INTEGER, " +
+                    "PRIMARY KEY ( name ))";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Table exists. Loading data.");
         }
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM StarWarGameState WHERE name = \"Chris\"");
+            if(!rs.next()){
+                System.out.println("Data not exist. Creating new data.");
+                stmt.executeUpdate("INSERT INTO StarWarGameState VALUES ('Chris',100)");
+            }
+            else{
+                System.out.println("Data read.");
+            }
     }
 
-    public static void writeData(){
+    public static void writeData() {
         System.out.println("Saved data.");
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE StarWarGameState SET hp = 200 WHERE name = \"Chris\"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error saving game data.");
+        }
     }
 }
