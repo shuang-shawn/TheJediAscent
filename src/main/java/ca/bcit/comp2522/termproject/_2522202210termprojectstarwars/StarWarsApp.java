@@ -36,7 +36,11 @@ public class StarWarsApp extends GameApplication {
     private IntegerProperty playerHP;
     private IntegerProperty enemyHP;
     private IntegerProperty playerDefense;
+    private IntegerProperty enemyDefense;
     private IntegerProperty playerAttackModifier;
+    private IntegerProperty enemyAttackModifier;
+    private EnemyStats enemyStats;
+    private EnemyAction enemyAction;
 
     @Override
     protected void onPreInit() {
@@ -67,6 +71,7 @@ public class StarWarsApp extends GameApplication {
         gCard = spawn("gCard");
         hCard = spawn("hCard");
         jCard = spawn("jCard");
+
         player = spawn("player");
         enemy = spawn("enemy");
 
@@ -75,10 +80,14 @@ public class StarWarsApp extends GameApplication {
         this.attackModifierCard = new AttackModifierCard(1);
         this.defenseModifierCard = new DefenseModifierCard(1);
 
+        enemyAction = new EnemyAction(enemy);
+
         this.playerHP = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getHp());
         this.enemyHP = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getHp());
         this.playerDefense = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getDefense());
+        this.enemyDefense = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getDefense());
         this.playerAttackModifier = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getAttackModifier());
+        this.enemyAttackModifier = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getAttackModifier());
     }
 
     @Override
@@ -107,11 +116,23 @@ public class StarWarsApp extends GameApplication {
         playerDefense.textProperty().bind(this.playerDefense.asString("Player defense: [%d]"));
         getGameScene().addUINode(playerDefense);
 
+        Text enemyDefense = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        enemyDefense.setTranslateX(enemyTextX);
+        enemyDefense.setTranslateY(rowOneY+rowHeight);
+        enemyDefense.textProperty().bind(this.enemyDefense.asString("Enemy defense: [%d]"));
+        getGameScene().addUINode(enemyDefense);
+
         Text playerAttackModifier = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
         playerAttackModifier.setTranslateX(playerTextX);
         playerAttackModifier.setTranslateY(rowOneY+rowHeight*2);
         playerAttackModifier.textProperty().bind(this.playerAttackModifier.asString("Player attack modifier: [%d]"));
         getGameScene().addUINode(playerAttackModifier);
+
+        Text enemyAttackModifier = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
+        enemyAttackModifier.setTranslateX(enemyTextX);
+        enemyAttackModifier.setTranslateY(rowOneY+rowHeight*2);
+        enemyAttackModifier.textProperty().bind(this.enemyAttackModifier.asString("Enemy attack modifier: [%d]"));
+        getGameScene().addUINode(enemyAttackModifier);
     }
 
     @Override
@@ -119,7 +140,9 @@ public class StarWarsApp extends GameApplication {
         playerHP.set(player.getComponent(PlayerStats.class).getHp());
         enemyHP.set(enemy.getComponent(EnemyStats.class).getHp());
         playerDefense.set(player.getComponent(PlayerStats.class).getDefense());
+        enemyDefense.set(enemy.getComponent(EnemyStats.class).getDefense());
         playerAttackModifier.set(player.getComponent(PlayerStats.class).getAttackModifier());
+        enemyAttackModifier.set(enemy.getComponent(EnemyStats.class).getAttackModifier());
         if (player.getComponent(Deck.class).getDeck().isEmpty()) {
             player.getComponent(Deck.class).refreshDeck();
             fCard = spawn("fCard");
@@ -137,6 +160,7 @@ public class StarWarsApp extends GameApplication {
                 player.getComponent(PlayerAnimationComponent.class).attackAnimation();
                 despawnWithScale(fCard);
                 player.getComponent(Deck.class).usedCard(CardType.ATTACK);
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining attack card.");
@@ -149,6 +173,7 @@ public class StarWarsApp extends GameApplication {
                 player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
                 despawnWithScale(gCard);
                 player.getComponent(Deck.class).usedCard(CardType.DEFENSE);
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining defense card.");
@@ -160,6 +185,7 @@ public class StarWarsApp extends GameApplication {
                 player.getComponent(PlayerAnimationComponent.class).buffAnimation();
                 despawnWithScale(hCard);
                 player.getComponent(Deck.class).usedCard(CardType.ATTACKMODIFIER);
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining attack modifier card.");
@@ -171,6 +197,7 @@ public class StarWarsApp extends GameApplication {
                 player.getComponent(PlayerAnimationComponent.class).buffAnimation();
                 despawnWithScale(jCard);
                 player.getComponent(Deck.class).usedCard(CardType.DEFENSEMODIFER);
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining defense modifier card.");
