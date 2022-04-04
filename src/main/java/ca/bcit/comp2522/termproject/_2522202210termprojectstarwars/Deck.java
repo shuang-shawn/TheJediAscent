@@ -9,7 +9,7 @@ public class Deck extends Component {
     private ArrayList<Card> deck = new ArrayList<>();
 
     public Deck() {
-        Card attackCard = new AttackCard(10);
+        Card attackCard = new AttackCard(50);
         Card defenseCard = new DefenseCard(5);
         Card attackModifierCard = new AttackModifierCard(1);
         Card defenseModifierCard = new DefenseModifierCard(1);
@@ -22,6 +22,43 @@ public class Deck extends Component {
     public ArrayList<Card> getDeck() {
         return deck;
     }
+
+    public Card getCard(CardType type) {
+        switch (type) {
+            case ATTACK -> {
+                for (Card card : deck) {
+                    if (card instanceof AttackCard) {
+                        return card;
+                    }
+                }
+            }
+
+            case DEFENSE -> {
+                for (Card card : deck) {
+                    if (card instanceof DefenseCard) {
+                        return card;
+                    }
+                }
+            }
+            case ATTACKMODIFIER -> {
+                for (Card card : deck) {
+                    if (card instanceof AttackModifierCard) {
+                        return card;
+                    }
+                }
+            }
+            case DEFENSEMODIFER -> {
+                for (Card card : deck) {
+                    if (card instanceof DefenseModifierCard) {
+                        return card;
+                    }
+                }
+            }
+            default -> { }
+        }
+        return null;
+    }
+
     public boolean checkCard(final CardType type) {
         switch (type) {
             case ATTACK -> {
@@ -111,6 +148,10 @@ public class Deck extends Component {
         this.deck.add(defenseCard);
         this.deck.add(attackModifierCard);
         this.deck.add(defenseModifierCard);
+    }
+
+    public void addCard(Card card) {
+        deck.add(card);
     }
 
 }
