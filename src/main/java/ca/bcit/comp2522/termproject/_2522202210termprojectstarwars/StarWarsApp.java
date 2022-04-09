@@ -58,7 +58,9 @@ public class StarWarsApp extends GameApplication {
         settings.setHeight(600);
         settings.setTitle("Star Wars");
         settings.setSceneFactory(new MySceneFactory());
+        settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
+        settings.setManualResizeEnabled(true);
     }
 
     @Override
@@ -74,8 +76,6 @@ public class StarWarsApp extends GameApplication {
         jCard = spawn("jCard");
 
         player = spawn("player");
-
-
 
         map = new Map();
         if (!map.getMap().isEmpty()) {

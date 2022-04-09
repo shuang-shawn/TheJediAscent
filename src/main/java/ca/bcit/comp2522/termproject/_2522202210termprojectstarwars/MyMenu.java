@@ -27,6 +27,15 @@ public class MyMenu extends FXGLMenu {
     public MyMenu(MenuType type) {
         super(type);
 
+        if (type == MenuType.GAME_MENU) {
+            MyGameMenu();
+        }
+        if (type == MenuType.MAIN_MENU) {
+            MyMainMenu();
+        }
+    }
+
+    private void MyGameMenu() {
         getContentRoot().setTranslateY(FXGL.getAppHeight() / 2.0);
 
         Rectangle bg = new Rectangle(FXGL.getAppWidth(), FXGL.getAppHeight(), Color.BLACK);
@@ -53,5 +62,35 @@ public class MyMenu extends FXGLMenu {
         exitStack.setTranslateY(60);
 
         getContentRoot().getChildren().addAll(bg, resumeStack, saveStack, exitStack);
+    }
+
+    private void MyMainMenu() {
+        getContentRoot().setTranslateY(FXGL.getAppHeight() / 2.0);
+
+        Rectangle bg = new Rectangle(FXGL.getAppWidth(), FXGL.getAppHeight(), Color.BLACK);
+        bg.setTranslateY(FXGL.getAppHeight() / 2.0 * -1);
+
+        Text testStartGame = FXGL.getUIFactoryService().newText("Start Game", Color.WHITE, 20);
+        Rectangle startGameBox = new Rectangle(FXGL.getAppWidth(), 20, Color.TRANSPARENT);
+        StackPane startGameStack = new StackPane();
+        startGameStack.getChildren().addAll(startGameBox, testStartGame);
+        startGameStack.setOnMouseClicked(e -> fireNewGame());
+        startGameStack.setTranslateY(50);
+
+        Text testLoad = FXGL.getUIFactoryService().newText("Load", Color.WHITE, 20);
+        Rectangle loadBox = new Rectangle(FXGL.getAppWidth(), 20, Color.TRANSPARENT);
+        StackPane loadStack = new StackPane();
+        loadStack.getChildren().addAll(loadBox, testLoad);
+//        loadStack.setOnMouseClicked(e -> DatabaseOperation.writeData());
+        loadStack.setTranslateY(80);
+
+        Text textExit = FXGL.getUIFactoryService().newText("Exit", Color.WHITE, 20);
+        Rectangle exitBox = new Rectangle(FXGL.getAppWidth(), 20, Color.TRANSPARENT);
+        StackPane exitStack = new StackPane();
+        exitStack.getChildren().addAll(exitBox, textExit);
+        exitStack.setOnMouseClicked(e -> FXGL.getGameController().exit());
+        exitStack.setTranslateY(110);
+
+        getContentRoot().getChildren().addAll(bg, startGameStack, loadStack, exitStack);
     }
 }
