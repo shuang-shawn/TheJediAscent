@@ -38,6 +38,7 @@ public class StarWarsApp extends GameApplication {
     private static String userName;
     private static int userHp = 0;
     private PropertyMap state;
+    private Entity gameMapUI;
 
     @Override
     protected void onPreInit() {
@@ -77,7 +78,8 @@ public class StarWarsApp extends GameApplication {
         }
         FXGL.getWorldProperties().setValue("map", map);
 
-        spawn("GamePathMap");
+        gameMapUI = spawn("GamePathMap");
+        gameMapUI.setVisible(false);
         spawn("background");
         spawn("cardPanel");
         player = spawn("player");
@@ -95,6 +97,10 @@ public class StarWarsApp extends GameApplication {
 
     @Override
     protected void initUI() {
+        addUI();
+    }
+
+    private void addUI() {
         int rowOneY = 350;
         int rowHeight = 20;
         int playerTextX = 190;
@@ -115,25 +121,25 @@ public class StarWarsApp extends GameApplication {
 
         Text playerDefense = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
         playerDefense.setTranslateX(playerTextX);
-        playerDefense.setTranslateY(rowOneY+rowHeight);
+        playerDefense.setTranslateY(rowOneY + rowHeight);
         playerDefense.textProperty().bind(this.playerDefense.asString("Player defense: [%d]"));
         getGameScene().addUINode(playerDefense);
 
         Text enemyDefense = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
         enemyDefense.setTranslateX(enemyTextX);
-        enemyDefense.setTranslateY(rowOneY+rowHeight);
+        enemyDefense.setTranslateY(rowOneY + rowHeight);
         enemyDefense.textProperty().bind(this.enemyDefense.asString("Enemy defense: [%d]"));
         getGameScene().addUINode(enemyDefense);
 
         Text playerAttackModifier = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
         playerAttackModifier.setTranslateX(playerTextX);
-        playerAttackModifier.setTranslateY(rowOneY+rowHeight*2);
+        playerAttackModifier.setTranslateY(rowOneY + rowHeight * 2);
         playerAttackModifier.textProperty().bind(this.playerAttackModifier.asString("Player attack modifier: [%d]"));
         getGameScene().addUINode(playerAttackModifier);
 
         Text enemyAttackModifier = FXGL.getUIFactoryService().newText("", Color.WHITE, textSize);
         enemyAttackModifier.setTranslateX(enemyTextX);
-        enemyAttackModifier.setTranslateY(rowOneY+rowHeight*2);
+        enemyAttackModifier.setTranslateY(rowOneY + rowHeight * 2);
         enemyAttackModifier.textProperty().bind(this.enemyAttackModifier.asString("Enemy attack modifier: [%d]"));
         getGameScene().addUINode(enemyAttackModifier);
     }
@@ -159,72 +165,79 @@ public class StarWarsApp extends GameApplication {
     @Override
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
-            if (fCard != null) {
+            if (gameMapUI.isVisible()) {
+                gameMapUI.setVisible(false);
+                addUI();
+            } else if (fCard != null) {
                 playCard(fCard);
                 despawnWithScale(fCard);
                 fCard = null;
+                checkHand();
+                checkEnemyDead();
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining F card.");
             }
-            checkHand();
-            checkEnemyDead();
-            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.G, () -> {
-            if (gCard != null) {
+            if (gCard != null && !gameMapUI.isVisible()) {
                 playCard(gCard);
                 despawnWithScale(gCard);
                 gCard = null;
+                checkHand();
+                checkEnemyDead();
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining G card.");
             }
-            checkHand();
-            checkEnemyDead();
-            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.H, () -> {
-            if (hCard != null) {
+            if (hCard != null && !gameMapUI.isVisible()) {
                 playCard(hCard);
                 despawnWithScale(hCard);
                 hCard = null;
+                checkHand();
+                checkEnemyDead();
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining H card.");
             }
-            checkHand();
-            checkEnemyDead();
-            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.J, () -> {
-            if (jCard != null) {
+            if (jCard != null && !gameMapUI.isVisible()) {
                 playCard(jCard);
                 despawnWithScale(jCard);
                 jCard = null;
+                checkHand();
+                checkEnemyDead();
+                enemyAction.execute(player);
             } else {
                 getNotificationService()
                         .pushNotification("No remaining J card.");
             }
-            checkHand();
-            checkEnemyDead();
-            enemyAction.execute(player);
+        });
+        onKeyDown(KeyCode.M, () -> {
+            gameMapUI.setVisible(true);
+            getGameScene().clearUINodes();
         });
     }
 
-    public static void setUserName(String inputUserName){
+    public static void setUserName(String inputUserName) {
         userName = inputUserName;
     }
 
-    public static void setUserHp(int userSavedHp){
+    public static void setUserHp(int userSavedHp) {
         userHp = userSavedHp;
     }
 
-    public static String getUserName(){
+    public static String getUserName() {
         return userName;
     }
 
-    public static int getUserHP(){
+    public static int getUserHP() {
         return userHp;
     }
 
@@ -243,7 +256,8 @@ public class StarWarsApp extends GameApplication {
             case DEFENSEMODIFER -> {
                 fCard = spawn("fDefBuff");
             }
-            default -> { }
+            default -> {
+            }
         }
 
         switch (player.getComponent(Deck.class).checkType(hand.get(1))) {
@@ -259,7 +273,8 @@ public class StarWarsApp extends GameApplication {
             case DEFENSEMODIFER -> {
                 gCard = spawn("gDefBuff");
             }
-            default -> { }
+            default -> {
+            }
         }
 
         switch (player.getComponent(Deck.class).checkType(hand.get(2))) {
@@ -275,7 +290,8 @@ public class StarWarsApp extends GameApplication {
             case DEFENSEMODIFER -> {
                 hCard = spawn("hDefBuff");
             }
-            default -> { }
+            default -> {
+            }
         }
 
         switch (player.getComponent(Deck.class).checkType(hand.get(3))) {
@@ -291,7 +307,8 @@ public class StarWarsApp extends GameApplication {
             case DEFENSEMODIFER -> {
                 jCard = spawn("jDefBuff");
             }
-            default -> { }
+            default -> {
+            }
         }
     }
 
