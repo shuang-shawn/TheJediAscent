@@ -11,10 +11,10 @@ public class Room extends Entity {
 
     public Room() {
         type = RoomType.NORMAL;
-        int name = ThreadLocalRandom.current().nextInt(0, 2);
+        int name = ThreadLocalRandom.current().nextInt(0, 3);
         int hp = ThreadLocalRandom.current().nextInt(20, 50);
         int defense = ThreadLocalRandom.current().nextInt(0, 2);
-        int reward = ThreadLocalRandom.current().nextInt(0, 3);
+        int reward = ThreadLocalRandom.current().nextInt(0, 4);
         switch (name) {
             case 0 -> {
                 enemy = new EnemyStats("Storm Trooper", hp, defense, 0, 0);
@@ -44,11 +44,12 @@ public class Room extends Entity {
         }
 
     }
+
     public Room(int boss) {
         type = RoomType.BOSS;
         int hp = ThreadLocalRandom.current().nextInt(70, 100);
         int defense = ThreadLocalRandom.current().nextInt(3, 4);
-        int reward = ThreadLocalRandom.current().nextInt(0, 3);
+        int reward = ThreadLocalRandom.current().nextInt(0, 4);
         switch (boss) {
             case 0 -> {
                 enemy = new EnemyStats("Darth Sidious", hp, defense, 0, 0);
@@ -88,5 +89,10 @@ public class Room extends Entity {
 
     public RoomType getRoomType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return enemy.getName() +" room";
     }
 }

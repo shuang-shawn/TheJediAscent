@@ -1,19 +1,15 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
-import com.almasb.fxgl.core.View;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
-import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.texture.Texture;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -28,6 +24,47 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("GamePathMap")
+    public Entity newGamePathMap(SpawnData data) {
+        GameMap map = FXGL.getWorldProperties().getObject("map");
+        StackPane mapStack = new StackPane();
+        StackPane roomBoxStack = new StackPane();
+        int xTranslateFactor = 0;
+
+        Rectangle bg = new Rectangle(800, 600, Color.BLACK);
+        bg.setTranslateZ(-1);
+        mapStack.getChildren().add(bg);
+
+        for (int i = 0; i < 3; i++) {
+            String enemy = map.getMap().get(i).getEnemy().getName();
+            Rectangle roomBox = new Rectangle(150, 60, Color.WHITE);
+            roomBox.setTranslateX(xTranslateFactor);
+            Text roomText = FXGL.getUIFactoryService().newText(enemy, Color.BLACK, 20);
+            roomText.setTranslateX(xTranslateFactor);
+            xTranslateFactor += 180;
+            roomBoxStack.getChildren().addAll(roomBox, roomText);
+        }
+
+        String boss = map.getMap().get(3).getEnemy().getName();
+        Rectangle roomBox = new Rectangle(150, 60, Color.WHITE);
+        roomBox.setTranslateX(xTranslateFactor);
+        Text roomText = FXGL.getUIFactoryService().newText(boss, Color.BLACK, 20);
+        roomText.setTranslateX(xTranslateFactor);
+        roomBoxStack.getChildren().addAll(roomBox, roomText);
+        roomBoxStack.setTranslateX(-400+75+55);
+        mapStack.getChildren().addAll(roomBoxStack);
+
+        Text continueText = FXGL.getUIFactoryService().newText("Press F to Continue.", Color.WHITE, 25);
+        continueText.setTranslateY(60);
+        mapStack.getChildren().addAll(continueText);
+
+        return FXGL.entityBuilder()
+                .view(mapStack)
+                .at(0, 0)
+                .zIndex(2)
+                .build();
+    }
+
     @Spawns("cardPanel")
     public Entity newCardPanel(SpawnData data) {
         return FXGL.entityBuilder()
@@ -35,6 +72,30 @@ public class GameElementFactory implements EntityFactory {
                 .at(0, 330)
                 .zIndex(-1)
                 .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("player")
+    public Entity newPlayer(SpawnData data) {
+        int userHP = StarWarsApp.getUserHP();
+        if (userHP == 0) {
+            userHP = 100;
+        }
+        return FXGL.entityBuilder()
+                .type(CharacterType.PLAYER)
+                .at(-100, 170)
+                .with(new PlayerAnimationComponent())
+                .with(new PlayerStats("Anakin", userHP, 0, 0, 0))
+                .with(new Deck())
+                .build();
+    }
+
+    @Spawns("enemy")
+    public Entity newEnemy(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
                 .build();
     }
 
@@ -51,6 +112,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(30, 410)
                 .build();
     }
+
     @Spawns("fDef")
     public Entity fDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
@@ -63,6 +125,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(30, 410)
                 .build();
     }
+
     @Spawns("fAtkBuff")
     public Entity fAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
@@ -75,6 +138,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(30, 410)
                 .build();
     }
+
     @Spawns("fDefBuff")
     public Entity fDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
@@ -88,11 +152,6 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-
-
-
-
-
     @Spawns("gAtk")
     public Entity gAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
@@ -105,6 +164,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(230, 410)
                 .build();
     }
+
     @Spawns("gDef")
     public Entity gDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
@@ -117,6 +177,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(230, 410)
                 .build();
     }
+
     @Spawns("gAtkBuff")
     public Entity gAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
@@ -129,6 +190,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(230, 410)
                 .build();
     }
+
     @Spawns("gDefBuff")
     public Entity gDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
@@ -142,7 +204,6 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-
     @Spawns("hAtk")
     public Entity hAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
@@ -155,6 +216,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(430, 410)
                 .build();
     }
+
     @Spawns("hDef")
     public Entity hDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
@@ -167,6 +229,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(430, 410)
                 .build();
     }
+
     @Spawns("hAtkBuff")
     public Entity hAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
@@ -179,6 +242,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(430, 410)
                 .build();
     }
+
     @Spawns("hDefBuff")
     public Entity hDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
@@ -192,9 +256,6 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-
-
-
     @Spawns("jAtk")
     public Entity jAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
@@ -207,6 +268,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(630, 410)
                 .build();
     }
+
     @Spawns("jDef")
     public Entity jDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
@@ -219,6 +281,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(630, 410)
                 .build();
     }
+
     @Spawns("jAtkBuff")
     public Entity jAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
@@ -242,40 +305,6 @@ public class GameElementFactory implements EntityFactory {
                 .view(cardStack)
                 .type(CardType.DEFENSEMODIFER)
                 .at(630, 410)
-                .build();
-    }
-
-    @Spawns("player")
-    public Entity newPlayer(SpawnData data) {
-        int userHP = StarWarsApp.getUserHP();
-        if (userHP == 0){
-            userHP = 100;
-        }
-        return FXGL.entityBuilder()
-                .type(CharacterType.PLAYER)
-                .at(-100, 170)
-                .with(new PlayerAnimationComponent())
-                .with(new PlayerStats("Anakin", userHP, 0, 0, 0))
-                .with(new Deck())
-                .build();
-    }
-
-    @Spawns("enemy")
-    public Entity newEnemy(SpawnData data) {
-        return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
-                .at(500, 170)
-                .with(new EnemyAnimationComponent())
-                .build();
-    }
-
-    @Spawns("test")
-    public Entity test(SpawnData data) {
-        return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
-                .at(500, 170)
-                .with(new EnemyAnimationComponent())
-                .with(new EnemyStats("Dooku", 20, 0, 0, 0))
                 .build();
     }
 }

@@ -49,22 +49,6 @@ public class StarWarsApp extends GameApplication {
         state = FXGL.getWorldProperties();
     }
 
-    public static void setUserName(String inputUserName){
-        userName = inputUserName;
-    }
-
-    public static void setUserHp(int userSavedHp){
-        userHp = userSavedHp;
-    }
-
-    public static String getUserName(){
-        return userName;
-    }
-
-    public static int getUserHP(){
-        return userHp;
-    }
-
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("hp", 100);
@@ -80,83 +64,9 @@ public class StarWarsApp extends GameApplication {
         settings.setMainMenuEnabled(true);
     }
 
-    public void displayHand() {
-        hand = player.getComponent(Deck.class).getHand();
-        switch (player.getComponent(Deck.class).checkType(hand.get(0))) {
-            case ATTACK -> {
-                fCard = spawn("fAtk");
-            }
-            case DEFENSE -> {
-                fCard = spawn("fDef");
-            }
-            case ATTACKMODIFIER -> {
-                fCard = spawn("fAtkBuff");
-            }
-            case DEFENSEMODIFER -> {
-                fCard = spawn("fDefBuff");
-            }
-            default -> { }
-        }
-
-        switch (player.getComponent(Deck.class).checkType(hand.get(1))) {
-            case ATTACK -> {
-                gCard = spawn("gAtk");
-            }
-            case DEFENSE -> {
-                gCard = spawn("gDef");
-            }
-            case ATTACKMODIFIER -> {
-                gCard = spawn("gAtkBuff");
-            }
-            case DEFENSEMODIFER -> {
-                gCard = spawn("gDefBuff");
-            }
-            default -> { }
-        }
-
-        switch (player.getComponent(Deck.class).checkType(hand.get(2))) {
-            case ATTACK -> {
-                hCard = spawn("hAtk");
-            }
-            case DEFENSE -> {
-                hCard = spawn("hDef");
-            }
-            case ATTACKMODIFIER -> {
-                hCard = spawn("hAtkBuff");
-            }
-            case DEFENSEMODIFER -> {
-                hCard = spawn("hDefBuff");
-            }
-            default -> { }
-        }
-
-        switch (player.getComponent(Deck.class).checkType(hand.get(3))) {
-            case ATTACK -> {
-                jCard = spawn("jAtk");
-            }
-            case DEFENSE -> {
-                jCard = spawn("jDef");
-            }
-            case ATTACKMODIFIER -> {
-                jCard = spawn("jAtkBuff");
-            }
-            case DEFENSEMODIFER -> {
-                jCard = spawn("jDefBuff");
-            }
-            default -> { }
-        }
-    }
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameElementFactory());
-
-        spawn("background");
-        spawn("cardPanel");
-        player = spawn("player");
-        player.getComponent(Deck.class).drawCard();
-        deck = player.getComponent(Deck.class);
-        displayHand();
-
 
         map = new GameMap();
         if (!map.getMap().isEmpty()) {
@@ -165,10 +75,15 @@ public class StarWarsApp extends GameApplication {
             enemyStats = enemy.getComponent(EnemyStats.class);
             enemyAction = new EnemyAction(enemy);
         }
+        FXGL.getWorldProperties().setValue("map", map);
 
-
-
-
+        spawn("GamePathMap");
+        spawn("background");
+        spawn("cardPanel");
+        player = spawn("player");
+        player.getComponent(Deck.class).drawCard();
+        deck = player.getComponent(Deck.class);
+        displayHand();
 
         this.playerHP = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getHp());
         this.enemyHP = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getHp());
@@ -241,73 +156,6 @@ public class StarWarsApp extends GameApplication {
         }
     }
 
-//    protected void checkDead() {
-//        if (enemy.getComponent(EnemyStats.class).getHp() <= 0) {
-//            despawnWithScale(enemy);
-//            player.getComponent(Deck.class).addCard(map.getFirstRoom().getRewardCard());
-//            if (map.getMap().iterator().hasNext()) {
-//                map.clearFirstRoom();
-//                enemy = spawn("enemy");
-//                enemy.addComponent(map.getFirstRoom().getEnemy());
-//                enemyAction = new EnemyAction(enemy);
-//            } else {
-//                map.clearFirstRoom();
-//            }
-//        }
-//        if (map.getMap().isEmpty()) {
-//            getNotificationService()
-//                    .pushNotification("You have pass the trial.");
-//        }
-//    }
-
-    public void playCard(Entity card) {
-        if (card.getType() == CardType.ATTACK) {
-            player.getComponent(Deck.class).getCard(CardType.ATTACK).attack(player, enemy);
-            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
-            player.getComponent(Deck.class).usedCard(CardType.ATTACK);
-        } else if (card.getType() == CardType.DEFENSE) {
-            player.getComponent(Deck.class).getCard(CardType.DEFENSE).defense(player);
-            player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
-            player.getComponent(Deck.class).usedCard(CardType.DEFENSE);
-        } else if (card.getType() == CardType.ATTACKMODIFIER) {
-            player.getComponent(Deck.class).getCard(CardType.ATTACKMODIFIER).increaseAttack(player);
-            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
-            player.getComponent(Deck.class).usedCard(CardType.ATTACKMODIFIER);
-        } else if (card.getType() == CardType.DEFENSEMODIFER) {
-            player.getComponent(Deck.class).getCard(CardType.DEFENSEMODIFER).increaseAttack(player);
-            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
-            player.getComponent(Deck.class).usedCard(CardType.DEFENSEMODIFER);
-        }
-    }
-
-    public void checkHand() {
-        if (deck.checkEmptyHand()) {
-            deck.drawCard();
-            displayHand();
-        }
-    }
-    public void checkEnemyDead() {
-        if (enemyStats.getHp() <= 0) {
-            despawnWithScale(enemy);
-            enemy = null;
-            enemyStats = null;
-            map.clearFirstRoom();
-            if (!map.getMap().isEmpty()) {
-                enemy = spawn("enemy");
-                enemy.addComponent(map.getFirstRoom().getEnemy());
-                enemyStats = enemy.getComponent(EnemyStats.class);
-                enemyAction = new EnemyAction(enemy);
-            }
-        }
-    }
-
-
-    public void checkPlayerDead() {
-        if (player.getComponent(PlayerStats.class).getHp() <= 0) {
-            spawn(map.getFirstRoom().getEnemy().getName());
-        }
-    }
-
     @Override
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
@@ -362,6 +210,137 @@ public class StarWarsApp extends GameApplication {
             checkEnemyDead();
             enemyAction.execute(player);
         });
+    }
+
+    public static void setUserName(String inputUserName){
+        userName = inputUserName;
+    }
+
+    public static void setUserHp(int userSavedHp){
+        userHp = userSavedHp;
+    }
+
+    public static String getUserName(){
+        return userName;
+    }
+
+    public static int getUserHP(){
+        return userHp;
+    }
+
+    public void displayHand() {
+        hand = player.getComponent(Deck.class).getHand();
+        switch (player.getComponent(Deck.class).checkType(hand.get(0))) {
+            case ATTACK -> {
+                fCard = spawn("fAtk");
+            }
+            case DEFENSE -> {
+                fCard = spawn("fDef");
+            }
+            case ATTACKMODIFIER -> {
+                fCard = spawn("fAtkBuff");
+            }
+            case DEFENSEMODIFER -> {
+                fCard = spawn("fDefBuff");
+            }
+            default -> { }
+        }
+
+        switch (player.getComponent(Deck.class).checkType(hand.get(1))) {
+            case ATTACK -> {
+                gCard = spawn("gAtk");
+            }
+            case DEFENSE -> {
+                gCard = spawn("gDef");
+            }
+            case ATTACKMODIFIER -> {
+                gCard = spawn("gAtkBuff");
+            }
+            case DEFENSEMODIFER -> {
+                gCard = spawn("gDefBuff");
+            }
+            default -> { }
+        }
+
+        switch (player.getComponent(Deck.class).checkType(hand.get(2))) {
+            case ATTACK -> {
+                hCard = spawn("hAtk");
+            }
+            case DEFENSE -> {
+                hCard = spawn("hDef");
+            }
+            case ATTACKMODIFIER -> {
+                hCard = spawn("hAtkBuff");
+            }
+            case DEFENSEMODIFER -> {
+                hCard = spawn("hDefBuff");
+            }
+            default -> { }
+        }
+
+        switch (player.getComponent(Deck.class).checkType(hand.get(3))) {
+            case ATTACK -> {
+                jCard = spawn("jAtk");
+            }
+            case DEFENSE -> {
+                jCard = spawn("jDef");
+            }
+            case ATTACKMODIFIER -> {
+                jCard = spawn("jAtkBuff");
+            }
+            case DEFENSEMODIFER -> {
+                jCard = spawn("jDefBuff");
+            }
+            default -> { }
+        }
+    }
+
+    public void playCard(Entity card) {
+        if (card.getType() == CardType.ATTACK) {
+            player.getComponent(Deck.class).getCard(CardType.ATTACK).attack(player, enemy);
+            player.getComponent(PlayerAnimationComponent.class).attackAnimation();
+            player.getComponent(Deck.class).usedCard(CardType.ATTACK);
+        } else if (card.getType() == CardType.DEFENSE) {
+            player.getComponent(Deck.class).getCard(CardType.DEFENSE).defense(player);
+            player.getComponent(PlayerAnimationComponent.class).defenseAnimation();
+            player.getComponent(Deck.class).usedCard(CardType.DEFENSE);
+        } else if (card.getType() == CardType.ATTACKMODIFIER) {
+            player.getComponent(Deck.class).getCard(CardType.ATTACKMODIFIER).increaseAttack(player);
+            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+            player.getComponent(Deck.class).usedCard(CardType.ATTACKMODIFIER);
+        } else if (card.getType() == CardType.DEFENSEMODIFER) {
+            player.getComponent(Deck.class).getCard(CardType.DEFENSEMODIFER).increaseAttack(player);
+            player.getComponent(PlayerAnimationComponent.class).buffAnimation();
+            player.getComponent(Deck.class).usedCard(CardType.DEFENSEMODIFER);
+        }
+    }
+
+    public void checkHand() {
+        if (deck.checkEmptyHand()) {
+            deck.drawCard();
+            displayHand();
+        }
+    }
+
+    public void checkEnemyDead() {
+        if (enemyStats.getHp() <= 0) {
+            despawnWithScale(enemy);
+            enemy = null;
+            enemyStats = null;
+            map.clearFirstRoom();
+            if (!map.getMap().isEmpty()) {
+                enemy = spawn("enemy");
+                enemy.addComponent(map.getFirstRoom().getEnemy());
+                enemyStats = enemy.getComponent(EnemyStats.class);
+                enemyAction = new EnemyAction(enemy);
+            }
+        }
+    }
+
+    public void checkPlayerDead() {
+        if (player.getComponent(PlayerStats.class).getHp() <= 0) {
+            spawn(map.getFirstRoom().getEnemy().getName());
+        }
     }
 
     public static void main(String[] args) {
