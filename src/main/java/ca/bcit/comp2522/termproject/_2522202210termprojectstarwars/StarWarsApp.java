@@ -4,21 +4,13 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.event.EventBus;
-import com.almasb.fxgl.input.Input;
-import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.scene.Scene;
-import com.almasb.fxgl.time.TimerAction;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.util.Duration;
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -143,11 +135,13 @@ public class StarWarsApp extends GameApplication {
         if (!map.getMap().isEmpty()) {
             enemy = spawn("enemy");
             enemy.addComponent(map.getFirstRoom().getEnemy());
+            enemyStats = enemy.getComponent(EnemyStats.class);
+            enemyAction = new EnemyAction(enemy);
         }
 
 
 
-        enemyAction = new EnemyAction(enemy);
+
 
         this.playerHP = new SimpleIntegerProperty(player.getComponent(PlayerStats.class).getHp());
         this.enemyHP = new SimpleIntegerProperty(enemy.getComponent(EnemyStats.class).getHp());
@@ -204,12 +198,23 @@ public class StarWarsApp extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf) {
-        playerHP.set(player.getComponent(PlayerStats.class).getHp());
-        enemyHP.set(enemy.getComponent(EnemyStats.class).getHp());
-        playerDefense.set(player.getComponent(PlayerStats.class).getDefense());
-        enemyDefense.set(enemy.getComponent(EnemyStats.class).getDefense());
-        playerAttackModifier.set(player.getComponent(PlayerStats.class).getAttackModifier());
-        enemyAttackModifier.set(enemy.getComponent(EnemyStats.class).getAttackModifier());
+        if (player.getComponent(PlayerStats.class).getHp() > 0) {
+            playerHP.set(player.getComponent(PlayerStats.class).getHp());
+            playerDefense.set(player.getComponent(PlayerStats.class).getDefense());
+            playerAttackModifier.set(player.getComponent(PlayerStats.class).getAttackModifier());
+        }
+        if (enemy != null) {
+            enemyHP.set(enemy.getComponent(EnemyStats.class).getHp());
+            enemyDefense.set(enemy.getComponent(EnemyStats.class).getDefense());
+            enemyAttackModifier.set(enemy.getComponent(EnemyStats.class).getAttackModifier());
+        } else {
+            enemyHP.set(0);
+            enemyDefense.set(0);
+            enemyAttackModifier.set(0);
+        }
+
+
+
 
 
 
@@ -235,7 +240,7 @@ public class StarWarsApp extends GameApplication {
 //        }
 //    }
 
-    public void checkKey(Entity card) {
+    public void playCard(Entity card) {
         if (card.getType() == CardType.ATTACK) {
             player.getComponent(Deck.class).getCard(CardType.ATTACK).attack(player, enemy);
             player.getComponent(PlayerAnimationComponent.class).attackAnimation();
@@ -261,12 +266,33 @@ public class StarWarsApp extends GameApplication {
             displayHand();
         }
     }
+    public void checkEnemyDead() {
+        if (enemyStats.getHp() <= 0) {
+            despawnWithScale(enemy);
+            enemy = null;
+            enemyStats = null;
+            map.clearFirstRoom();
+            if (!map.getMap().isEmpty()) {
+                enemy = spawn("enemy");
+                enemy.addComponent(map.getFirstRoom().getEnemy());
+                enemyStats = enemy.getComponent(EnemyStats.class);
+                enemyAction = new EnemyAction(enemy);
+            }
+        }
+    }
+
+
+    public void checkPlayerDead() {
+        if (player.getComponent(PlayerStats.class).getHp() <= 0) {
+            spawn(map.getFirstRoom().getEnemy().getName());
+        }
+    }
 
     @Override
     protected void initInput() {
         onKeyDown(KeyCode.F, () -> {
             if (fCard != null) {
-                checkKey(fCard);
+                playCard(fCard);
                 despawnWithScale(fCard);
                 fCard = null;
             } else {
@@ -274,10 +300,12 @@ public class StarWarsApp extends GameApplication {
                         .pushNotification("No remaining F card.");
             }
             checkHand();
+            checkEnemyDead();
+            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.G, () -> {
             if (gCard != null) {
-                checkKey(gCard);
+                playCard(gCard);
                 despawnWithScale(gCard);
                 gCard = null;
             } else {
@@ -285,10 +313,12 @@ public class StarWarsApp extends GameApplication {
                         .pushNotification("No remaining G card.");
             }
             checkHand();
+            checkEnemyDead();
+            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.H, () -> {
             if (hCard != null) {
-                checkKey(hCard);
+                playCard(hCard);
                 despawnWithScale(hCard);
                 hCard = null;
             } else {
@@ -296,10 +326,12 @@ public class StarWarsApp extends GameApplication {
                         .pushNotification("No remaining H card.");
             }
             checkHand();
+            checkEnemyDead();
+            enemyAction.execute(player);
         });
         onKeyDown(KeyCode.J, () -> {
             if (jCard != null) {
-                checkKey(jCard);
+                playCard(jCard);
                 despawnWithScale(jCard);
                 jCard = null;
             } else {
@@ -307,6 +339,8 @@ public class StarWarsApp extends GameApplication {
                         .pushNotification("No remaining J card.");
             }
             checkHand();
+            checkEnemyDead();
+            enemyAction.execute(player);
         });
     }
 
