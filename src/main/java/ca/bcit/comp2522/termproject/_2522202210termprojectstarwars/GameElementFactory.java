@@ -13,14 +13,24 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.Random;
+
 public class GameElementFactory implements EntityFactory {
     @Spawns("background")
     public Entity newBackground(SpawnData data) {
+        String texturePath;
+        String enemyName = StarWarsApp.getEnemyName();
+        if (enemyName.equals("Dooku") || enemyName.equals("Grievous") || enemyName.equals("Windu")) {
+            texturePath = "background/" + enemyName + ".png";
+        } else {
+            Random random = new Random();
+            int bgNumber = random.nextInt(1, 7);
+            texturePath = "background/" + bgNumber + ".png";
+        }
         return FXGL.entityBuilder()
-                .view("background/Flagship.png")
+                .view(texturePath)
                 .at(0, 0)
                 .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 
@@ -51,7 +61,7 @@ public class GameElementFactory implements EntityFactory {
         Text roomText = FXGL.getUIFactoryService().newText(boss, Color.BLACK, 20);
         roomText.setTranslateX(xTranslateFactor);
         roomBoxStack.getChildren().addAll(roomBox, roomText);
-        roomBoxStack.setTranslateX(-400+75+55);
+        roomBoxStack.setTranslateX(-400 + 75 + 55);
         mapStack.getChildren().addAll(roomBoxStack);
 
         Text continueText = FXGL.getUIFactoryService().newText("Press F to Continue.", Color.WHITE, 25);
@@ -90,8 +100,53 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("enemy")
-    public Entity newEnemy(SpawnData data) {
+    @Spawns("Trooper")
+    public Entity newTrooper(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .build();
+    }
+
+    @Spawns("Droid")
+    public Entity newDroid(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .build();
+    }
+
+    @Spawns("Guard")
+    public Entity newGuard(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .build();
+    }
+
+    @Spawns("Dooku")
+    public Entity newDooku(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .build();
+    }
+
+    @Spawns("Grievous")
+    public Entity newGrievous(SpawnData data) {
+        return FXGL.entityBuilder()
+                .type(CharacterType.ENEMY)
+                .at(500, 170)
+                .with(new EnemyAnimationComponent())
+                .build();
+    }
+
+    @Spawns("Windu")
+    public Entity newWindu(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.ENEMY)
                 .at(500, 170)

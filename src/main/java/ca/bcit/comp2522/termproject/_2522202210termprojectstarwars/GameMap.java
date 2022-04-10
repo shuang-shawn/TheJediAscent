@@ -27,6 +27,7 @@ public class GameMap extends Entity {
         return map.get(0);
     }
     public void clearFirstRoom() {
+
         map.remove(0);
     }
 }

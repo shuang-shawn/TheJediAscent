@@ -18,6 +18,9 @@ import java.util.Map;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class StarWarsApp extends GameApplication {
+    private static String userName;
+    private static String enemyName;
+    private static int userHp = 0;
     private Entity player;
     private Entity enemy;
     private Entity fCard;
@@ -35,10 +38,9 @@ public class StarWarsApp extends GameApplication {
     private EnemyStats enemyStats;
     private EnemyAction enemyAction;
     private GameMap map;
-    private static String userName;
-    private static int userHp = 0;
     private PropertyMap state;
     private Entity gameMapUI;
+    private Entity background;
 
     @Override
     protected void onPreInit() {
@@ -70,17 +72,18 @@ public class StarWarsApp extends GameApplication {
         FXGL.getGameWorld().addEntityFactory(new GameElementFactory());
 
         map = new GameMap();
-        if (!map.getMap().isEmpty()) {
-            enemy = spawn("enemy");
-            enemy.addComponent(map.getFirstRoom().getEnemy());
-            enemyStats = enemy.getComponent(EnemyStats.class);
-            enemyAction = new EnemyAction(enemy);
-        }
+        enemyName = map.getFirstRoom().getEnemy().getName();
+
+        enemy = spawn(enemyName);
+        enemy.addComponent(map.getFirstRoom().getEnemy());
+        enemyStats = enemy.getComponent(EnemyStats.class);
+        enemyAction = new EnemyAction(enemy);
+
         FXGL.getWorldProperties().setValue("map", map);
 
         gameMapUI = spawn("GamePathMap");
         gameMapUI.setVisible(false);
-        spawn("background");
+        background= spawn("background");
         spawn("cardPanel");
         player = spawn("player");
         player.getComponent(Deck.class).drawCard();
@@ -237,6 +240,10 @@ public class StarWarsApp extends GameApplication {
         return userName;
     }
 
+    public static String getEnemyName() {
+        return enemyName;
+    }
+
     public static int getUserHP() {
         return userHp;
     }
@@ -342,14 +349,22 @@ public class StarWarsApp extends GameApplication {
     public void checkEnemyDead() {
         if (enemyStats.getHp() <= 0) {
             despawnWithScale(enemy);
+            background.removeFromWorld();
             enemy = null;
             enemyStats = null;
             map.clearFirstRoom();
             if (!map.getMap().isEmpty()) {
-                enemy = spawn("enemy");
+                gameMapUI.setVisible(true);
+                getGameScene().clearUINodes();
+                enemyName = map.getFirstRoom().getEnemy().getName();
+                enemy = spawn(enemyName);
+                background = spawn("background");
                 enemy.addComponent(map.getFirstRoom().getEnemy());
                 enemyStats = enemy.getComponent(EnemyStats.class);
                 enemyAction = new EnemyAction(enemy);
+            }
+            else{
+                FXGL.getGameController().gotoMainMenu();
             }
         }
     }
