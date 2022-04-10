@@ -13,12 +13,12 @@ public class AttackCard extends Card {
     public void attack(Entity attacker, Entity receiver) {
         if (attacker.getType() == CharacterType.PLAYER) {
             int attackValue = this.getValue() + attacker.getComponent(PlayerStats.class).getAttackModifier()
-                    - receiver.getComponent(EnemyStats.class).getDefenseModifier();
+                    - receiver.getComponent(EnemyStats.class).getDefense();
             receiver.getComponent(EnemyStats.class).setHP(attackValue);
             getNotificationService().pushNotification(receiver.getComponent(EnemyStats.class).toString());
         } else {
             int attackValue = this.getValue() + attacker.getComponent(EnemyStats.class).getAttackModifier()
-                    - receiver.getComponent(PlayerStats.class).getDefenseModifier();
+                    - receiver.getComponent(PlayerStats.class).getDefense();
             receiver.getComponent(PlayerStats.class).setHP(attackValue);
             getNotificationService().pushNotification(receiver.getComponent(PlayerStats.class).toString());
         }

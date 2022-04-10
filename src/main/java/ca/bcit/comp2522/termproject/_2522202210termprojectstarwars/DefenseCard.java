@@ -12,10 +12,12 @@ public class DefenseCard extends Card {
     @Override
     public void defense(Entity character) {
         if (character.getType() == CharacterType.PLAYER) {
-            character.getComponent(PlayerStats.class).setDefense(this.getValue());
+            character.getComponent(PlayerStats.class)
+                    .setDefense(this.getValue() + character.getComponent(PlayerStats.class).getDefenseModifier());
             getNotificationService().pushNotification(character.getComponent(PlayerStats.class).displayDefense());
         } else {
-            character.getComponent(EnemyStats.class).setDefense(this.getValue());
+            character.getComponent(EnemyStats.class)
+                    .setDefense(this.getValue() + character.getComponent(EnemyStats.class).getDefenseModifier());
             getNotificationService().pushNotification(character.getComponent(EnemyStats.class).displayDefense());
         }
     }

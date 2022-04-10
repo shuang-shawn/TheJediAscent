@@ -38,54 +38,214 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("fCard")
-    public Entity fCard(SpawnData data) {
+    @Spawns("fAtk")
+    public Entity fAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
         Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
                 .view(cardStack)
+                .type(CardType.ATTACK)
+                .with()
                 .at(30, 410)
                 .build();
     }
-
-    @Spawns("gCard")
-    public Entity gCard(SpawnData data) {
+    @Spawns("fDef")
+    public Entity fDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
         Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
                 .view(cardStack)
-                .at(230, 410)
+                .type(CardType.DEFENSE)
+                .at(30, 410)
                 .build();
     }
-
-    @Spawns("hCard")
-    public Entity hCard(SpawnData data) {
+    @Spawns("fAtkBuff")
+    public Entity fAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
         Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
                 .view(cardStack)
-                .at(430, 410)
+                .type(CardType.ATTACKMODIFIER)
+                .at(30, 410)
                 .build();
     }
-    //140x180
-
-    @Spawns("jCard")
-    public Entity jCard(SpawnData data) {
-        Texture cardView = FXGL.getAssetLoader().loadTexture("j.png");
-        Text cardText = FXGL.getUIFactoryService().newText("J", Color.WHITE, 20);
+    @Spawns("fDefBuff")
+    public Entity fDefBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
                 .view(cardStack)
+                .type(CardType.DEFENSEMODIFER)
+                .at(30, 410)
+                .build();
+    }
+
+
+
+
+
+
+    @Spawns("gAtk")
+    public Entity gAtk(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACK)
+                .at(230, 410)
+                .build();
+    }
+    @Spawns("gDef")
+    public Entity gDef(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSE)
+                .at(230, 410)
+                .build();
+    }
+    @Spawns("gAtkBuff")
+    public Entity gAtkBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACKMODIFIER)
+                .at(230, 410)
+                .build();
+    }
+    @Spawns("gDefBuff")
+    public Entity gDefBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSEMODIFER)
+                .at(230, 410)
+                .build();
+    }
+
+
+    @Spawns("hAtk")
+    public Entity hAtk(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACK)
+                .at(430, 410)
+                .build();
+    }
+    @Spawns("hDef")
+    public Entity hDef(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSE)
+                .at(430, 410)
+                .build();
+    }
+    @Spawns("hAtkBuff")
+    public Entity hAtkBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACKMODIFIER)
+                .at(430, 410)
+                .build();
+    }
+    @Spawns("hDefBuff")
+    public Entity hDefBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSEMODIFER)
+                .at(430, 410)
+                .build();
+    }
+
+
+
+
+    @Spawns("jAtk")
+    public Entity jAtk(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACK)
                 .at(630, 410)
                 .build();
     }
+    @Spawns("jDef")
+    public Entity jDef(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSE)
+                .at(630, 410)
+                .build();
+    }
+    @Spawns("jAtkBuff")
+    public Entity jAtkBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.ATTACKMODIFIER)
+                .at(630, 410)
+                .build();
+    }
+    @Spawns("jDefBuff")
+    public Entity jDefBuff(SpawnData data) {
+        Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        StackPane cardStack = new StackPane();
+        cardStack.getChildren().addAll(cardView, cardText);
+        return FXGL.entityBuilder()
+                .view(cardStack)
+                .type(CardType.DEFENSEMODIFER)
+                .at(630, 410)
+                .build();
+    }
+
+
+
 
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
