@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 import com.almasb.fxgl.entity.Entity;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Room extends Entity {

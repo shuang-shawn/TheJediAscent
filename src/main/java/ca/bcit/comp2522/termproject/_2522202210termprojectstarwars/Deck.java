@@ -1,11 +1,8 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
-
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
-
 import java.util.ArrayList;
 
 public class Deck extends Component {

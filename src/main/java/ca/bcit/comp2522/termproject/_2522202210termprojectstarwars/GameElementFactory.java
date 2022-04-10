@@ -9,7 +9,6 @@ import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.texture.Texture;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 

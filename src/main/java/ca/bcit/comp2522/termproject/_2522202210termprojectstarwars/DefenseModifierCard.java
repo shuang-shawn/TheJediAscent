@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 import com.almasb.fxgl.entity.Entity;
-
 import static com.almasb.fxgl.dsl.FXGL.getNotificationService;
 
 public class DefenseModifierCard extends Card {
