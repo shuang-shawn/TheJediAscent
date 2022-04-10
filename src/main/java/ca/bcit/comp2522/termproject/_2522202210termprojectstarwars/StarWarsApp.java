@@ -58,6 +58,7 @@ public class StarWarsApp extends GameApplication {
         settings.setTitle("Star Wars");
         settings.setSceneFactory(new MySceneFactory());
         settings.setGameMenuEnabled(true);
+        settings.setMainMenuEnabled(true);
     }
 
     public void displayHand() {
