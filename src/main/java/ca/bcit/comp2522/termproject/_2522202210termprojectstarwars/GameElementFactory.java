@@ -231,6 +231,7 @@ public class GameElementFactory implements EntityFactory {
                 .at(630, 410)
                 .build();
     }
+
     @Spawns("jDefBuff")
     public Entity jDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
@@ -244,16 +245,17 @@ public class GameElementFactory implements EntityFactory {
                 .build();
     }
 
-
-
-
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
+        int userHP = StarWarsApp.getUserHP();
+        if (userHP == 0){
+            userHP = 100;
+        }
         return FXGL.entityBuilder()
                 .type(CharacterType.PLAYER)
                 .at(-100, 170)
                 .with(new PlayerAnimationComponent())
-                .with(new PlayerStats("Anakin", 20, 0, 0, 0))
+                .with(new PlayerStats("Anakin", userHP, 0, 0, 0))
                 .with(new Deck())
                 .build();
     }

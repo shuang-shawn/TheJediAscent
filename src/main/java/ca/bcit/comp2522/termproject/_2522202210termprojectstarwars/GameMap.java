@@ -5,10 +5,10 @@ import com.almasb.fxgl.entity.Entity;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Map extends Entity {
+public class GameMap extends Entity {
     private ArrayList<Room> map = new ArrayList<>();
 
-    public Map() {
+    public GameMap() {
         int seed = ThreadLocalRandom.current().nextInt(0, 2);
         Room roomOne = new Room();
         Room roomTwo = new Room();

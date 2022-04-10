@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import javafx.scene.input.KeyCode;
@@ -12,6 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -32,15 +34,40 @@ public class StarWarsApp extends GameApplication {
     private IntegerProperty enemyAttackModifier;
     private EnemyStats enemyStats;
     private EnemyAction enemyAction;
-    private Map map;
+    private GameMap map;
+    private static String userName;
+    private static int userHp = 0;
+    private PropertyMap state;
 
     @Override
     protected void onPreInit() {
         try {
-            DatabaseOperation.readData();
+            DatabaseOperation.connectDB();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        state = FXGL.getWorldProperties();
+    }
+
+    public static void setUserName(String inputUserName){
+        userName = inputUserName;
+    }
+
+    public static void setUserHp(int userSavedHp){
+        userHp = userSavedHp;
+    }
+
+    public static String getUserName(){
+        return userName;
+    }
+
+    public static int getUserHP(){
+        return userHp;
+    }
+
+    @Override
+    protected void initGameVars(Map<String, Object> vars) {
+        vars.put("hp", 100);
     }
 
     @Override
@@ -131,7 +158,7 @@ public class StarWarsApp extends GameApplication {
         displayHand();
 
 
-        map = new Map();
+        map = new GameMap();
         if (!map.getMap().isEmpty()) {
             enemy = spawn("enemy");
             enemy.addComponent(map.getFirstRoom().getEnemy());
@@ -212,13 +239,6 @@ public class StarWarsApp extends GameApplication {
             enemyDefense.set(0);
             enemyAttackModifier.set(0);
         }
-
-
-
-
-
-
-
     }
 
 //    protected void checkDead() {

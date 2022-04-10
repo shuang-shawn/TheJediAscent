@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject._2522202210termprojectstarwars;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 
 public abstract class CharacterStats extends Component {
@@ -20,6 +21,7 @@ public abstract class CharacterStats extends Component {
 
     public void setHP(int damage) {
         this.hp -= damage - defense;
+        FXGL.getWorldProperties().setValue("hp", this.hp);
     }
 
     public void setDefense(int value) {
@@ -61,6 +63,7 @@ public abstract class CharacterStats extends Component {
     public String displayAttackModifier() {
         return "Attack modifier: " + this.attackModifier;
     }
+
     public String displayDefenseModifier() {
         return "Defense modifier: " + this.defenseModifier;
     }

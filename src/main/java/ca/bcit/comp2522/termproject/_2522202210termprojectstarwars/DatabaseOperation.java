@@ -9,7 +9,7 @@ public final class DatabaseOperation {
     private DatabaseOperation() {
     }
 
-    public static void readData() throws SQLException, ClassNotFoundException {
+    public static void connectDB() throws SQLException, ClassNotFoundException {
         // We register the Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -38,27 +38,68 @@ public final class DatabaseOperation {
                     "PRIMARY KEY ( name ))";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            System.out.println("Table exists. Loading data.");
+            System.out.println("Table already exists.");
         }
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM StarWarGameState WHERE name = \"Chris\"");
-            if(!rs.next()){
-                System.out.println("Data not exist. Creating new data.");
-                stmt.executeUpdate("INSERT INTO StarWarGameState VALUES ('Chris',100)");
-            }
-            else{
-                System.out.println("Data read.");
-            }
     }
 
-    public static void writeData() {
-        System.out.println("Saved data.");
+    public static String readData(String userName) {
+        String sqlQuery = String.join("", "SELECT * FROM StarWarGameState WHERE name = \"", userName, "\"");
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("UPDATE StarWarGameState SET hp = 200 WHERE name = \"Chris\"");
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+            if (rs.next()) {
+                return rs.getString("hp");
+            } else {
+                return "User not found.";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Error saving game data.");
+            return "Error reading database.";
+        }
+    }
+
+    public static void overwriteData(String userName) {
+        String sqlQuery = String.join("", "UPDATE StarWarGameState SET hp = 100 WHERE name = \"", userName, "\"");
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void newData(String userName) {
+        String sqlQuery = String.join("", "SELECT * FROM StarWarGameState WHERE name = \"", userName, "\"");
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+            if (!rs.next()) {
+                newUserData(userName);
+            } else {
+                overwriteData(userName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void newUserData(String userName) {
+        String sqlQuery = String.join("", "INSERT INTO StarWarGameState VALUES (\"", userName, "\",100)");
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateData(String userName, Integer hp) {
+        String sqlQuery = String.join("", "UPDATE StarWarGameState SET hp = ", hp.toString(), " WHERE name = \"", userName, "\"");
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
