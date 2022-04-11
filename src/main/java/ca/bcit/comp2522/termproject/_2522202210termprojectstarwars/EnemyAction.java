@@ -59,9 +59,9 @@ public class EnemyAction {
             case 0:
                 enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
             case 1:
-                enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
+                enemy.getComponent(DookuAnimationComponent.class).strongAttackAnimation();
             case 2:
-                enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
+                enemy.getComponent(DookuAnimationComponent.class).blockAnimation();
             case 3:
                 enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
         }
@@ -102,7 +102,7 @@ public class EnemyAction {
                 enemy.getComponent(TrooperAnimationComponent.class).attackAnimation();
 
             case 1:
-                enemy.getComponent(TrooperAnimationComponent.class).attackAnimation();
+                enemy.getComponent(TrooperAnimationComponent.class).strongAttackAnimation();
 
         }
     }
