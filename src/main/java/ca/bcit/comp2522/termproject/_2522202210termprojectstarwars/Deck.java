@@ -12,7 +12,7 @@ public class Deck extends Component {
 
 
     public Deck() {
-        Card attackCard = new AttackCard(1);
+        Card attackCard = new AttackCard(10);
         Card defenseCard = new DefenseCard(5);
         Card attackModifierCard = new AttackModifierCard(1);
         Card defenseModifierCard = new DefenseModifierCard(1);
@@ -30,7 +30,11 @@ public class Deck extends Component {
             }
         }
     }
+    public void fillHand() {
+        if (hand.size() < 4) {
 
+        }
+    }
     public ArrayList<Card> getDeck() {
         return deck;
     }
@@ -177,7 +181,7 @@ public class Deck extends Component {
 
     public void drawCard() {
         int deckSize = this.deck.size();
-        int remainingCounter = 4;
+        int remainingCounter = 4 - hand.size();
         if (deckSize < 4) {
             this.hand.addAll(this.deck);
             remainingCounter -= deckSize;
@@ -192,12 +196,12 @@ public class Deck extends Component {
             }
         } else {
             Iterator<Card> i = this.deck.iterator();
-            int removeCounter = 0;
-            while (i.hasNext() && removeCounter < 4) {
+            int removeCounter = 4 - hand.size();
+            while (i.hasNext() && removeCounter > 0) {
                 Card card = i.next();
                 this.hand.add(card);
                 i.remove();
-                removeCounter++;
+                removeCounter--;
             }
         }
 
