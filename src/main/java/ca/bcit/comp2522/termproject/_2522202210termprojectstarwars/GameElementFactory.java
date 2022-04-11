@@ -102,54 +102,54 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("Trooper")
     public Entity newTrooper(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.TROOPER)
                 .at(500, 205)
-                .with(new EnemyAnimation("Trooper"))
+                .with(new TrooperAnimationComponent())
                 .build();
     }
 
     @Spawns("Droid")
     public Entity newDroid(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.DROID)
                 .at(500, 170)
-                .with(new EnemyAnimation("Dooku"))
+                .with(new DroidAnimationComponent())
                 .build();
     }
 
     @Spawns("Guard")
     public Entity newGuard(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.GUARD)
                 .at(500, 170)
-                .with(new EnemyAnimation("Dooku"))
+                .with(new GuardAnimationComponent())
                 .build();
     }
 
     @Spawns("Dooku")
     public Entity newDooku(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.BOSS)
+                .type(CharacterType.DOOKU)
                 .at(500, 170)
-                .with(new EnemyAnimation("Dooku"))
+                .with(new DookuAnimationComponent())
                 .build();
     }
 
     @Spawns("Grievous")
     public Entity newGrievous(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.BOSS)
+                .type(CharacterType.GRIEVOUS)
                 .at(500, 170)
-                .with(new EnemyAnimation("Dooku"))
+                .with(new GrievousAnimationComponent())
                 .build();
     }
 
     @Spawns("Windu")
     public Entity newWindu(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.BOSS)
+                .type(CharacterType.WINDU)
                 .at(500, 170)
-                .with(new EnemyAnimation("Dooku"))
+                .with(new WinduAnimationComponent())
                 .build();
     }
 

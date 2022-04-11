@@ -19,10 +19,10 @@ public class Room extends Entity {
                 enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
             }
             case 1 -> {
-                enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
+                enemy = new EnemyStats("Droid", hp, defense, 0, 0);
             }
             case 2 -> {
-                enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
+                enemy = new EnemyStats("Guard", hp, defense, 0, 0);
             }
             default -> {
             }

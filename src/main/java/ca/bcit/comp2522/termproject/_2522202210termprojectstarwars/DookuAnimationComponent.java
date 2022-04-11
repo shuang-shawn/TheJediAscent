@@ -20,4 +20,7 @@ public class DookuAnimationComponent extends AnimationComponent {
     public void onUpdate(double tpf) {
 
     }
+
+    public void attackAnimation() {
+    }
 }
