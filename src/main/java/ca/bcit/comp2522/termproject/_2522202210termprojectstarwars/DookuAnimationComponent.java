@@ -5,11 +5,11 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
-public class EnemyAnimationComponent extends AnimationComponent {
+public class DookuAnimationComponent extends AnimationComponent {
     private static final String IDLE_ASSET = "DookuIdle.png";
     private final AnimationChannel animIdle;
 
-    public EnemyAnimationComponent() {
+    public DookuAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
                 7, 96, 132, Duration.seconds(1), 0, 6);
         texture = new AnimatedTexture(animIdle);

@@ -103,8 +103,8 @@ public class GameElementFactory implements EntityFactory {
     public Entity newTrooper(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.ENEMY)
-                .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .at(500, 205)
+                .with(new EnemyAnimation("Trooper"))
                 .build();
     }
 
@@ -113,7 +113,7 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .type(CharacterType.ENEMY)
                 .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .with(new EnemyAnimation("Dooku"))
                 .build();
     }
 
@@ -122,41 +122,41 @@ public class GameElementFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .type(CharacterType.ENEMY)
                 .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .with(new EnemyAnimation("Dooku"))
                 .build();
     }
 
     @Spawns("Dooku")
     public Entity newDooku(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.BOSS)
                 .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .with(new EnemyAnimation("Dooku"))
                 .build();
     }
 
     @Spawns("Grievous")
     public Entity newGrievous(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.BOSS)
                 .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .with(new EnemyAnimation("Dooku"))
                 .build();
     }
 
     @Spawns("Windu")
     public Entity newWindu(SpawnData data) {
         return FXGL.entityBuilder()
-                .type(CharacterType.ENEMY)
+                .type(CharacterType.BOSS)
                 .at(500, 170)
-                .with(new EnemyAnimationComponent())
+                .with(new EnemyAnimation("Dooku"))
                 .build();
     }
 
     @Spawns("fAtk")
     public Entity fAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
-        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -170,7 +170,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("fDef")
     public Entity fDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
-        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -183,7 +183,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("fAtkBuff")
     public Entity fAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -196,7 +196,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("fDefBuff")
     public Entity fDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -209,7 +209,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("gAtk")
     public Entity gAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
-        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -222,7 +222,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("gDef")
     public Entity gDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
-        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -235,7 +235,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("gAtkBuff")
     public Entity gAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -248,7 +248,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("gDefBuff")
     public Entity gDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -261,7 +261,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("hAtk")
     public Entity hAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
-        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -274,7 +274,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("hDef")
     public Entity hDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
-        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -287,7 +287,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("hAtkBuff")
     public Entity hAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -300,7 +300,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("hDefBuff")
     public Entity hDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -313,7 +313,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("jAtk")
     public Entity jAtk(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("attack.png");
-        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("ATTACK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -326,7 +326,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("jDef")
     public Entity jDef(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("block.png");
-        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("BLOCK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -339,7 +339,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("jAtkBuff")
     public Entity jAtkBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("atkBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE ATK", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()
@@ -352,7 +352,7 @@ public class GameElementFactory implements EntityFactory {
     @Spawns("jDefBuff")
     public Entity jDefBuff(SpawnData data) {
         Texture cardView = FXGL.getAssetLoader().loadTexture("defBuff.png");
-        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 20);
+        Text cardText = FXGL.getUIFactoryService().newText("INCREASE DEF", Color.WHITE, 19);
         StackPane cardStack = new StackPane();
         cardStack.getChildren().addAll(cardView, cardText);
         return FXGL.entityBuilder()

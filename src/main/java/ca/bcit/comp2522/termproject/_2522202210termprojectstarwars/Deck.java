@@ -12,7 +12,7 @@ public class Deck extends Component {
 
 
     public Deck() {
-        Card attackCard = new AttackCard(50);
+        Card attackCard = new AttackCard(1);
         Card defenseCard = new DefenseCard(5);
         Card attackModifierCard = new AttackModifierCard(1);
         Card defenseModifierCard = new DefenseModifierCard(1);
