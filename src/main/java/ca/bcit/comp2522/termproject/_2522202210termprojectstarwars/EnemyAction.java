@@ -17,9 +17,9 @@ public class EnemyAction {
     public EnemyAction(Entity enemy) {
         random = new Random();
         this.enemy = enemy;
-        this.attackCard = new AttackCard(1);
-        this.defenseCard = new DefenseCard(1);
-        this.attackModifierCard = new AttackModifierCard(1);
+        this.attackCard = new AttackCard(15);
+        this.defenseCard = new DefenseCard(5);
+        this.attackModifierCard = new AttackModifierCard(2);
     }
 
     public void attack(Entity player) {

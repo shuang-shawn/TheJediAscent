@@ -168,6 +168,7 @@ public class StarWarsApp extends GameApplication {
             if (gameMapUI.isVisible()) {
                 gameMapUI.setVisible(false);
                 addUI();
+                fillHand();
             } else if (fCard != null) {
                 playCard(fCard);
                 despawnWithScale(fCard);
@@ -343,6 +344,11 @@ public class StarWarsApp extends GameApplication {
         }
     }
 
+    public void fillHand() {
+        deck.drawCard();
+        displayHand();
+    }
+
     public void checkEnemyDead() {
         if (enemyStats.getHp() <= 0) {
             despawnWithScale(enemy);
@@ -359,6 +365,7 @@ public class StarWarsApp extends GameApplication {
                 enemy.addComponent(map.getFirstRoom().getEnemy());
                 enemyStats = enemy.getComponent(EnemyStats.class);
                 enemyAction = new EnemyAction(enemy);
+
             }
             else{
                 FXGL.getGameController().gotoMainMenu();
