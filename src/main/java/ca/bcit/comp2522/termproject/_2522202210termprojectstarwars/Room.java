@@ -16,10 +16,10 @@ public class Room extends Entity {
         int reward = ThreadLocalRandom.current().nextInt(0, 4);
         switch (name) {
             case 0 -> {
-                enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
+                enemy = new EnemyStats("Droid", hp, defense, 0, 0);
             }
             case 1 -> {
-                enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
+                enemy = new EnemyStats("Guard", hp, defense, 0, 0);
             }
             case 2 -> {
                 enemy = new EnemyStats("Trooper", hp, defense, 0, 0);
@@ -55,10 +55,10 @@ public class Room extends Entity {
                 enemy = new EnemyStats("Dooku", hp, defense, 0, 0);
             }
             case 1 -> {
-                enemy = new EnemyStats("Grievous", hp, defense, 0, 0);
+                enemy = new EnemyStats("Dooku", hp, defense, 0, 0);
             }
             case 2 -> {
-                enemy = new EnemyStats("Windu", hp, defense, 0, 0);
+                enemy = new EnemyStats("Dooku", hp, defense, 0, 0);
             }
             default -> {
             }

@@ -112,7 +112,7 @@ public class GameElementFactory implements EntityFactory {
     public Entity newDroid(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.DROID)
-                .at(500, 170)
+                .at(500, 168)
                 .with(new DroidAnimationComponent())
                 .build();
     }
@@ -121,7 +121,7 @@ public class GameElementFactory implements EntityFactory {
     public Entity newGuard(SpawnData data) {
         return FXGL.entityBuilder()
                 .type(CharacterType.GUARD)
-                .at(500, 170)
+                .at(500, 172)
                 .with(new GuardAnimationComponent())
                 .build();
     }

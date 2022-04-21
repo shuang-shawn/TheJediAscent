@@ -8,21 +8,25 @@ import javafx.util.Duration;
 public class DroidAnimationComponent extends AnimationComponent {
     private static final String IDLE_ASSET = "DroidIdle.png";
     private static final String ATTACK_ASSET = "DroidAttack.png";
+    private static final String StrongAttack_ASSET = "DroidStrongAttack.png";
     private final AnimationChannel animIdle;
     private final AnimationChannel animAttack;
+    private final AnimationChannel animStrongAttack;
     private final int idleWidth, idleHeight;
     private final double originalX = 500;
-    private final double originalY = 205;
+    private final double originalY = 168;
 
     public DroidAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
-                4, 99, 97, Duration.seconds(1), 0, 3);
+                2, 142, 130, Duration.seconds(0.5), 0, 1);
         animAttack = new AnimationChannel(FXGL.image(ATTACK_ASSET),
-                17, 266, 97, Duration.seconds(1.5), 0, 16);
+                7, 176, 127, Duration.seconds(0.5), 0, 6);
+        animStrongAttack = new AnimationChannel(FXGL.image(StrongAttack_ASSET),
+                13, 161, 175, Duration.seconds(0.5), 0, 12);
         idleWidth = animIdle.getFrameWidth(1);
         idleHeight = animIdle.getFrameHeight(1);
         texture = new AnimatedTexture(animIdle);
-        texture.playAnimationChannel(animIdle);
+        texture.loopAnimationChannel(animIdle);
     }
 
     @Override
@@ -43,8 +47,14 @@ public class DroidAnimationComponent extends AnimationComponent {
     }
 
     public void attackAnimation() {
-        frameCounter = 70;
+        frameCounter = 35;
         adjustPosition(animAttack);
         texture.playAnimationChannel(animAttack);
+    }
+
+    public void strongAttackAnimation() {
+        frameCounter = 35;
+        adjustPosition(animStrongAttack);
+        texture.playAnimationChannel(animStrongAttack);
     }
 }

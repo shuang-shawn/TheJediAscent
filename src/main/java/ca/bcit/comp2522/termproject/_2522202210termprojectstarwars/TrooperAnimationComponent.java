@@ -8,7 +8,7 @@ import javafx.util.Duration;
 public class TrooperAnimationComponent extends AnimationComponent {
     private static final String IDLE_ASSET = "TrooperIdle.png";
     private static final String ATTACK_ASSET = "TrooperAttack.png";
-    private static final String StrongAttack_ASSET = "DookuStrongAttack.png";
+    private static final String StrongAttack_ASSET = "TrooperStrongAttack.png";
     private final AnimationChannel animIdle;
     private final AnimationChannel animAttack;
     private final AnimationChannel animStrongAttack;
@@ -18,15 +18,15 @@ public class TrooperAnimationComponent extends AnimationComponent {
 
     public TrooperAnimationComponent() {
         animIdle = new AnimationChannel(FXGL.image(IDLE_ASSET),
-                4, 99, 97, Duration.seconds(1), 0, 3);
+                4, 99, 97, Duration.seconds(0.5), 0, 3);
         animAttack = new AnimationChannel(FXGL.image(ATTACK_ASSET),
-                17, 266, 97, Duration.seconds(1), 0, 16);
+                11, 118, 124, Duration.seconds(0.5), 0, 10);
         animStrongAttack = new AnimationChannel(FXGL.image(StrongAttack_ASSET),
-                16, 114, 100, Duration.seconds(1), 0, 15);
+                17, 266, 97, Duration.seconds(1), 0, 16);
         idleWidth = animIdle.getFrameWidth(1);
         idleHeight = animIdle.getFrameHeight(1);
         texture = new AnimatedTexture(animIdle);
-        texture.playAnimationChannel(animIdle);
+        texture.loopAnimationChannel(animIdle);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TrooperAnimationComponent extends AnimationComponent {
     }
 
     public void attackAnimation() {
-        frameCounter = 70;
+        frameCounter = 35;
         adjustPosition(animAttack);
         texture.playAnimationChannel(animAttack);
     }

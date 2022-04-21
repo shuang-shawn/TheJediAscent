@@ -39,7 +39,7 @@ public class EnemyAction {
 
     public void execute(Entity player) {
         if (enemy.getType() == CharacterType.DOOKU) {
-            DroidAction(player);
+            DookuAction(player);
         } else if (enemy.getType() == CharacterType.WINDU) {
             WinduAction(player);
         } else if (enemy.getType() == CharacterType.GRIEVOUS) {
@@ -56,76 +56,54 @@ public class EnemyAction {
     private void DookuAction(Entity player) {
         seed = random.nextInt(0, 4);
         switch (seed) {
-            case 0:
-                enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
-            case 1:
-                enemy.getComponent(DookuAnimationComponent.class).strongAttackAnimation();
-            case 2:
-                enemy.getComponent(DookuAnimationComponent.class).blockAnimation();
-            case 3:
-                enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
+            case 0 -> enemy.getComponent(DookuAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(DookuAnimationComponent.class).strongAttackAnimation();
+            case 2 -> enemy.getComponent(DookuAnimationComponent.class).blockAnimation();
+            case 3 -> enemy.getComponent(DookuAnimationComponent.class).buffAnimation();
         }
     }
 
     private void WinduAction(Entity player) {
         seed = random.nextInt(0, 4);
         switch (seed) {
-            case 0:
-                enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
-            case 1:
-                enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
-            case 2:
-                enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
-            case 3:
-                enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
+            case 0 -> enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
+            case 2 -> enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
+            case 3 -> enemy.getComponent(WinduAnimationComponent.class).attackAnimation();
         }
     }
 
     private void GrievousAction(Entity player) {
         seed = random.nextInt(0, 4);
         switch (seed) {
-            case 0:
-                enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
-            case 1:
-                enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
-            case 2:
-                enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
-            case 3:
-                enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
+            case 0 -> enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
+            case 2 -> enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
+            case 3 -> enemy.getComponent(GrievousAnimationComponent.class).attackAnimation();
         }
     }
 
     private void TrooperAction(Entity player) {
         seed = random.nextInt(0, 2);
         switch (seed) {
-            case 0:
-                enemy.getComponent(TrooperAnimationComponent.class).attackAnimation();
-
-            case 1:
-                enemy.getComponent(TrooperAnimationComponent.class).strongAttackAnimation();
-
+            case 0 -> enemy.getComponent(TrooperAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(TrooperAnimationComponent.class).strongAttackAnimation();
         }
     }
 
     private void DroidAction(Entity player) {
         seed = random.nextInt(0, 2);
         switch (seed) {
-            case 0:
-                enemy.getComponent(DroidAnimationComponent.class).attackAnimation();
-
-            case 1:
-                enemy.getComponent(DroidAnimationComponent.class).attackAnimation();
+            case 0 -> enemy.getComponent(DroidAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(DroidAnimationComponent.class).strongAttackAnimation();
         }
     }
 
     private void GuardAction(Entity player) {
         seed = random.nextInt(0, 2);
         switch (seed) {
-            case 0:
-                enemy.getComponent(GuardAnimationComponent.class).attackAnimation();
-
-            case 1:
-                enemy.getComponent(GuardAnimationComponent.class).attackAnimation();
+            case 0 -> enemy.getComponent(GuardAnimationComponent.class).attackAnimation();
+            case 1 -> enemy.getComponent(GuardAnimationComponent.class).strongAttackAnimation();
         }
     }
 }
