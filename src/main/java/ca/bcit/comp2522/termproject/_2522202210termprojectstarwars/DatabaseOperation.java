@@ -18,8 +18,8 @@ public final class DatabaseOperation {
 
         // We need to send a user and a password when we try to connect!
         final Properties connectionProperties = new Properties();
-        connectionProperties.put("user", "root");
-        connectionProperties.put("password", "12345678");
+        connectionProperties.put("user", "comp2522");
+        connectionProperties.put("password", "I was born in 1973");
 
         // We establish a connection...
         connection = DriverManager.getConnection(URL, connectionProperties);
